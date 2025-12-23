@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum Sport Renting</title>
+    <!-- Tipografía Montserrat para mantener identidad corporativa -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Resets básicos para clientes de correo */
+        body { margin: 0; padding: 0; min-width: 100%; background-color: #ffffff; }
+        table { border-spacing: 0; border-collapse: collapse; }
+        td { padding: 0; vertical-align: top; }
+        img { display: block; border: 0; outline: none; text-decoration: none; }
+        
+        /* Estilos generales */
+        .wrapper { width: 100%; table-layout: fixed; background-color: #ffffff; padding-bottom: 40px; }
+        .main-table { background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 600px; font-family: 'Montserrat', Helvetica, Arial, sans-serif; }
+        
+        /* Botón Hover (solo funcionará en clientes modernos) */
+        .btn-primary:hover { background-color: #1aa14b !important; }
+
+        /* Media Queries para Móvil */
+        @media screen and (max-width: 600px) {
+            .three-col .column { width: 100% !important; max-width: 100% !important; display: block; margin-bottom: 20px; }
+            /* Hero Image responsive en móvil: Ancho completo */
+            .hero-image { width: 100% !important; max-width: 100% !important; height: auto !important; }
+            .mobile-padding { padding-left: 20px !important; padding-right: 20px !important; }
+            h1 { font-size: 22px !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <center class="wrapper">
+        <table class="main-table" width="600" cellpadding="0" cellspacing="0">
+            
+            <!-- HEADER (Blanco con Logo Club) -->
+            <tr>
+                <td bgcolor="#ffffff" style="padding: 20px 0; text-align: center; border-bottom: 1px solid #eeeeee;">
+                    <!-- Logo actualizado con tamaño aumentado un 20% (de 180px a 216px) -->
+                    <img src="https://appfsclub.forumsport.com/file-uploader-folder/nvvwu4l8viysp6t57a7aj4d2c4e6c8c95a8a5c36e08d4aed2f21e684czdsqjvgnxaeux09rf.jpg" alt="Forum Sport Club" width="216" style="display: inline-block; max-width: 216px;">
+                </td>
+            </tr>
+
+            <!-- HERO IMAGE (Esquiador) - Ancho Completo, Altura Recortada -->
+            <tr>
+                <td align="center" style="padding-top: 0px;">
+                    <!-- Se mantiene el recorte de altura a 300px -->
+                    <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&h=600&q=80" alt="Esquiador en nieve polvo" width="600" height="300" class="hero-image" style="width: 100%; max-width: 600px; height: auto; display: block;">
+                </td>
+            </tr>
+
+            <!-- TEXTO INTRODUCTORIO -->
+            <tr>
+                <td class="mobile-padding" style="padding: 30px 40px 10px 40px; text-align: center;">
+                    <h1 style="margin: 0 0 15px 0; font-size: 24px; font-weight: 800; color: #000000; line-height: 1.2;">
+                        ¡Hola Alex! ¿Viste equipo pero no te decides? Te entendemos.
+                    </h1>
+                    <p style="margin: 0; font-size: 16px; font-weight: 400; color: #333333; line-height: 1.5;">
+                        ¿Para qué comprar si solo vas un finde?<br>
+                        Descubre una forma más inteligente y sostenible.
+                    </p>
+                </td>
+            </tr>
+
+            <!-- CAJA GRIS DE BENEFICIOS (3 COLUMNAS) -->
+            <tr>
+                <td style="padding: 20px 20px;">
+                    <table width="100%" cellpadding="0" cellspacing="0" bgcolor="#f4f4f4" style="background-color: #f4f4f4; border-radius: 8px;">
+                        <tr>
+                            <td style="padding: 30px 10px;">
+                                <table width="100%" cellpadding="0" cellspacing="0">
+                                    <tr class="three-col">
+                                        
+                                        <!-- Columna 1: Sostenible -->
+                                        <td class="column" width="33%" style="text-align: center; vertical-align: top; padding: 0 5px;">
+                                            <div style="margin-bottom: 10px;">
+                                                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921829.png" width="50" alt="Sostenible" style="display: inline-block;">
+                                            </div>
+                                            <p style="margin: 0; font-size: 13px; font-weight: 700; color: #000000; margin-bottom: 5px;">Más Sostenible:</p>
+                                            <p style="margin: 0; font-size: 13px; font-weight: 400; color: #333333; line-height: 1.4;">
+                                                Economía circular con Newe.
+                                            </p>
+                                        </td>
+
+                                        <!-- Columna 2: Paga por uso -->
+                                        <td class="column" width="33%" style="text-align: center; vertical-align: top; padding: 0 5px;">
+                                            <div style="margin-bottom: 10px;">
+                                                <img src="https://cdn-icons-png.flaticon.com/512/2721/2721092.png" width="50" alt="Monedas" style="display: inline-block;">
+                                            </div>
+                                            <p style="margin: 0; font-size: 13px; font-weight: 700; color: #000000; margin-bottom: 5px;">Paga por uso:</p>
+                                            <p style="margin: 0; font-size: 13px; font-weight: 400; color: #333333; line-height: 1.4;">
+                                                Solo los días que lo necesitas.
+                                            </p>
+                                        </td>
+
+                                        <!-- Columna 3: Material a punto -->
+                                        <td class="column" width="33%" style="text-align: center; vertical-align: top; padding: 0 5px;">
+                                            <div style="margin-bottom: 10px;">
+                                                <img src="https://cdn-icons-png.flaticon.com/512/9713/9713501.png" width="50" alt="Botas Ski" style="display: inline-block;">
+                                            </div>
+                                            <p style="margin: 0; font-size: 13px; font-weight: 700; color: #000000; margin-bottom: 5px;">Siempre a punto:</p>
+                                            <p style="margin: 0; font-size: 13px; font-weight: 400; color: #333333; line-height: 1.4;">
+                                                Material premium sin mantenimiento.
+                                            </p>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- CTA BUTTON -->
+            <tr>
+                <td style="padding: 10px 40px 30px 40px; text-align: center;">
+                    <table align="center" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td align="center" bgcolor="#1aa14b" style="border-radius: 5px;">
+                                <a href="https://www.forumsport.com" target="_blank" class="btn-primary" style="font-size: 16px; font-family: 'Montserrat', Helvetica, Arial, sans-serif; font-weight: 800; color: #ffffff; text-decoration: none; padding: 15px 30px; border-radius: 5px; border: 1px solid #1aa14b; display: inline-block; text-transform: uppercase;">
+                                    Descubrir el Renting Sostenible
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- FOOTER -->
+            <tr>
+                <td style="text-align: center; padding-bottom: 30px;">
+                    <p style="font-size: 16px; color: #000000; font-weight: 500; margin: 0;">
+                        ¡Nos vemos en las pistas!
+                    </p>
+                </td>
+            </tr>
+
+        </table>
+    </center>
+
+</body>
+</html>

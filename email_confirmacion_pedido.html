@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Pedido - Forum Sport</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Resets */
+        body { margin: 0; padding: 0; background-color: #f4f4f4; font-family: 'Montserrat', Helvetica, Arial, sans-serif; color: #333333; -webkit-font-smoothing: antialiased; }
+        table { border-spacing: 0; border-collapse: collapse; }
+        td { padding: 0; }
+        img { border: 0; display: block; }
+        a { text-decoration: none; color: #005eb8; }
+        
+        /* Container */
+        .wrapper { width: 100%; table-layout: fixed; background-color: #f4f4f4; padding-bottom: 40px; }
+        .main-table { background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 600px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        /* Elements */
+        .header { padding: 25px 0; border-bottom: 3px solid #005eb8; text-align: center; }
+        .hero { padding: 40px 30px 20px 30px; text-align: center; }
+        .hero-title { font-size: 24px; font-weight: 800; color: #000000; margin: 0 0 10px 0; text-transform: uppercase; }
+        .hero-sub { font-size: 16px; color: #666666; line-height: 1.5; margin: 0; }
+        
+        .order-info { background-color: #f8f9fa; padding: 15px; margin: 0 30px 30px 30px; border-radius: 8px; border: 1px solid #e9ecef; }
+        .order-id { font-family: monospace; font-size: 16px; font-weight: 700; color: #005eb8; }
+        
+        .section-title { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #999; margin-bottom: 15px; letter-spacing: 1px; }
+        
+        .product-table { width: 100%; border-top: 1px solid #eee; }
+        .product-cell { padding: 20px 0; border-bottom: 1px solid #eee; }
+        
+        .dhl-box { background-color: #ffcc00; color: #d40511; padding: 15px 20px; border-radius: 6px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; margin: 0 30px 30px 30px; }
+        
+        .btn-track { background-color: #d40511; color: #ffffff !important; padding: 10px 20px; border-radius: 4px; font-size: 12px; text-transform: uppercase; font-weight: 700; display: inline-block; }
+
+        .footer { background-color: #333333; color: #ffffff; padding: 30px; text-align: center; font-size: 12px; }
+        
+        /* Mobile */
+        @media screen and (max-width: 600px) {
+            .main-table { width: 100% !important; }
+            .hero { padding: 30px 20px; }
+            .dhl-box { flex-direction: column; gap: 10px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<center class="wrapper">
+    <table class="main-table" width="600">
+        
+        <!-- HEADER -->
+        <tr>
+            <td class="header">
+                <!-- Logo del Club actualizado -->
+                <img src="https://appfsclub.forumsport.com/file-uploader-folder/nvvwu4l8viysp6t57a7aj4d2c4e6c8c95a8a5c36e08d4aed2f21e684czdsqjvgnxaeux09rf.jpg" alt="Forum Sport Club" width="160" style="display: inline-block;">
+            </td>
+        </tr>
+
+        <!-- HERO -->
+        <tr>
+            <td class="hero">
+                <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" width="60" style="display: block; margin: 0 auto 20px auto;">
+                <h1 class="hero-title">¡Gracias, Álex!</h1>
+                <p class="hero-sub">
+                    Hemos recibido el pedido que <strong>Mikel</strong> ha gestionado para ti desde la tienda <em>FS Urban Calle Mayor</em>.
+                </p>
+            </td>
+        </tr>
+
+        <!-- ORDER ID BOX -->
+        <tr>
+            <td>
+                <div class="order-info" style="text-align: center;">
+                    <p style="margin: 0; font-size: 12px; color: #666; text-transform: uppercase;">Referencia del Pedido</p>
+                    <p class="order-id">#OMS-FS-2883910</p>
+                </div>
+            </td>
+        </tr>
+
+        <!-- DHL TRACKING -->
+        <tr>
+            <td>
+                <div class="dhl-box">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <!-- Logo DHL Actualizado -->
+                        <img src="https://www.dhl.com/content/dam/dhl/global/core/images/logos/dhl-logo.svg" width="100" alt="DHL">
+                        <span style="font-size: 14px; color: #000;">Envío Express (24h)</span>
+                    </div>
+                    <a href="#" class="btn-track">Seguir Envío</a>
+                </div>
+            </td>
+        </tr>
+
+        <!-- PRODUCT DETAILS -->
+        <tr>
+            <td style="padding: 0 30px;">
+                <p class="section-title">Tu Selección</p>
+                <table class="product-table">
+                    <tr>
+                        <td class="product-cell" width="120">
+                            <!-- Imagen actualizada con la URL correcta del producto en verde -->
+                            <img src="https://base.net/cdn/shop/files/1-original_dc6de906-67b8-4960-a08e-a1156d09f007.jpg?v=1750054654&width=640" width="100" style="border-radius: 8px;">
+                        </td>
+                        <td class="product-cell" style="padding-left: 20px; vertical-align: middle;">
+                            <p style="margin: 0 0 5px 0; font-weight: 700; font-size: 14px; color: #000;">ASICS GEL-NIMBUS 28</p>
+                            <p style="margin: 0 0 5px 0; font-size: 12px; color: #666;">Color: <strong>Verde Turquesa / Island Blue</strong></p>
+                            <p style="margin: 0 0 10px 0; font-size: 12px; color: #666;">Talla: <strong>43.5</strong></p>
+                            <p style="margin: 0; font-weight: 800; color: #005eb8;">179,99€</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!-- SUMMARY -->
+        <tr>
+            <td style="padding: 20px 30px 40px 30px;">
+                <table width="100%">
+                    <tr>
+                        <td style="padding: 5px 0; color: #666; font-size: 13px;">Subtotal</td>
+                        <td style="padding: 5px 0; text-align: right; color: #333; font-weight: 600; font-size: 13px;">179,99€</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0; color: #666; font-size: 13px;">Envío (DHL Express)</td>
+                        <td style="padding: 5px 0; text-align: right; color: #28a745; font-weight: 600; font-size: 13px;">GRATIS (Socio Gold)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 15px 0; font-weight: 800; font-size: 16px; border-top: 1px solid #eee;">TOTAL</td>
+                        <td style="padding: 15px 0; text-align: right; font-weight: 800; font-size: 18px; color: #005eb8; border-top: 1px solid #eee;">179,99€</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!-- ADDRESS -->
+        <tr>
+            <td style="padding: 0 30px 40px 30px;">
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; display: flex; gap: 15px; align-items: start;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/535/535239.png" width="24" style="opacity: 0.5;">
+                    <div>
+                        <p style="margin: 0 0 5px 0; font-weight: 700; font-size: 12px; text-transform: uppercase; color: #999;">Dirección de Entrega</p>
+                        <p style="margin: 0; font-size: 14px; line-height: 1.4; color: #333;">
+                            <strong>Álex Martínez</strong><br>
+                            Calle Corrida, 12, 4º B<br>
+                            33206 Gijón, Asturias
+                        </p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <!-- FOOTER -->
+        <tr>
+            <td class="footer">
+                <p style="margin-bottom: 10px;">¿Necesitas ayuda? Responde a este email o contacta con Agentforce.</p>
+                <p style="opacity: 0.5;">© 2025 Forum Sport S.A. | Todos los derechos reservados.</p>
+            </td>
+        </tr>
+
+    </table>
+</center>
+
+</body>
+</html>

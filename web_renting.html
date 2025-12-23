@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum Sport - Renting Sostenible</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel para JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Google Fonts: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+        .forum-blue { color: #005eb8; }
+        .bg-forum-blue { background-color: #005eb8; }
+        .forum-green { color: #28a745; }
+        /* Animación suave para el modal */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .slide-up { animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- COMPONENTE PRINCIPAL ---
+        function RentingApp() {
+            const [currentStep, setCurrentStep] = useState('home'); // home, results, checkout, success
+            const [cart, setCart] = useState([]);
+            const [showAiModal, setShowAiModal] = useState(false);
+            const [aiResponse, setAiResponse] = useState('');
+            const [isLoadingAi, setIsLoadingAi] = useState(false);
+            const [selectedPack, setSelectedPack] = useState(null);
+
+            // Datos simulados de Data Cloud (Perfil de Álex)
+            const userProfile = {
+                name: "Álex",
+                level: "Intermedio",
+                height: "180cm",
+                weight: "75kg",
+                shoeSize: "43",
+                preferences: ["Sostenibilidad", "Comodidad", "Pista Azul/Roja"]
+            };
+
+            // --- GEMINI API INTEGRATION ---
+            const callGeminiAdvisor = async (packName) => {
+                setIsLoadingAi(true);
+                setAiResponse('');
+                
+                // Prompt Contextual
+                const prompt = `
+                    Actúa como "Mikel", el experto en esquí de Forum Sport.
+                    Perfil del usuario: ${JSON.stringify(userProfile)}.
+                    Contexto: Viaje a Sierra Nevada este fin de semana.
+                    Producto consultado: ${packName}.
+                    
+                    Tarea: 
+                    1. Explica brevemente por qué este pack es bueno para su nivel intermedio y sus medidas.
+                    2. Destaca el beneficio de sostenibilidad (alquilar vs comprar).
+                    3. Sé muy breve (máximo 60 palabras), empático y usa emojis. Habla en español.
+                `;
+
+                try {
+                    const apiKey = ""; // La clave se inyecta automáticamente en el entorno
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    });
+                    
+                    if (!response.ok) throw new Error('API Error');
+                    
+                    const data = await response.json();
+                    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Lo siento, no pude generar una respuesta.";
+                    setAiResponse(text);
+                } catch (error) {
+                    // Fallback simulado para demo
+                    setTimeout(() => {
+                        setAiResponse(`¡Hola Álex! 👋 Para tu altura de 1.80m y nivel intermedio, este pack ${packName} es ideal porque ofrece estabilidad sin ser demasiado rígido. 🎿 Además, al alquilarlo evitas generar residuos de fabricación nueva. ¡Planeta feliz, esquiador feliz! 🌍✨`);
+                    }, 1500);
+                } finally {
+                    setIsLoadingAi(false);
+                }
+            };
+
+            const openAiAdvisor = (pack) => {
+                setSelectedPack(pack);
+                setShowAiModal(true);
+                callGeminiAdvisor(pack.name);
+            };
+
+            // --- COMPONENTES UI ---
+
+            const Header = () => (
+                <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-between h-20 items-center">
+                            <div className="flex items-center cursor-pointer" onClick={() => setCurrentStep('home')}>
+                                {/* Logo REAL (Imagen) */}
+                                <img 
+                                    src="https://www.forumsport.com/medias/Logo-Header-400x95.jpg?context=bWFzdGVyfGltYWdlc3wyNzY0MXxpbWFnZS9qcGVnfGFHSTJMMmhqTmk4eE1UZzROak0xTWpJek5qVTNOQXxjNWYwZTBhODAwZmQzNGFkYWE2YTdlOTRmOTlkNGMwZTY5ZTE0NjY3MTNkYTJjZDRiNDhhNjJkODg5Y2QyMjUy" 
+                                    alt="Forum Sport" 
+                                    className="h-10 w-auto mr-4" 
+                                />
+                                <div className="flex flex-col border-l-2 border-gray-200 pl-3">
+                                    <span className="text-forum-blue text-sm font-extrabold tracking-wide leading-none">ALQUILER</span>
+                                    <span className="text-gray-500 text-xs font-bold leading-none mt-0.5">MATERIAL</span>
+                                </div>
+                            </div>
+                            <div className="flex items-center space-x-4 text-sm text-gray-600">
+                                <span className="hidden md:inline">Hola, <strong>{userProfile.name}</strong> (Socio Club)</span>
+                                <div className="p-2.5 bg-gray-100 rounded-full text-gray-600 hover:text-forum-blue transition cursor-pointer relative">
+                                    <i className="fa-solid fa-cart-shopping text-xl"></i>
+                                    {cart.length > 0 && <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            );
+
+            const Hero = () => (
+                <div className="relative bg-forum-blue overflow-hidden">
+                    <div className="absolute inset-0">
+                        <img className="w-full h-full object-cover opacity-25" src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" alt="Material de Esquí" />
+                    </div>
+                    <div className="relative max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+                        <div className="bg-blue-900/30 backdrop-blur-sm px-4 py-1 rounded-full mb-6 border border-blue-400/30">
+                            <span className="text-blue-100 text-xs font-bold tracking-wider uppercase"><i className="fa-solid fa-skiing mr-2"></i> Portal Oficial de Renting</span>
+                        </div>
+                        <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl drop-shadow-lg">
+                            Alquila tu equipo.<br/>Vive la nieve.
+                        </h1>
+                        <p className="mt-6 text-xl text-blue-100 max-w-3xl drop-shadow-md">
+                            Accede al mejor material de esquí y snowboard de las marcas top (Salomon, Atomic, Head). Sin comprar, sin cargar, sin preocupaciones.
+                        </p>
+                        
+                        {/* Search Widget */}
+                        <div className="mt-10 w-full max-w-4xl bg-white rounded-xl shadow-2xl p-4 flex flex-col md:flex-row gap-4 slide-up">
+                            <div className="flex-1 flex items-center bg-gray-50 rounded-lg px-4 py-3 border-2 border-transparent hover:border-blue-500 transition cursor-pointer group">
+                                <i className="fa-solid fa-mountain-sun text-gray-400 mr-4 text-2xl group-hover:text-blue-500 transition"></i>
+                                <div className="text-left w-full">
+                                    <p className="text-xs text-gray-500 font-bold uppercase tracking-wide">Punto de Recogida</p>
+                                    <select className="bg-transparent font-bold text-gray-900 w-full outline-none cursor-pointer">
+                                        <option>Sierra Nevada (FS Urban)</option>
+                                        <option>Baqueira Beret</option>
+                                        <option>Formigal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="flex-1 flex items-center bg-gray-50 rounded-lg px-4 py-3 border-2 border-transparent hover:border-blue-500 transition cursor-pointer group">
+                                <i className="fa-regular fa-calendar-check text-gray-400 mr-4 text-2xl group-hover:text-blue-500 transition"></i>
+                                <div className="text-left w-full">
+                                    <p className="text-xs text-gray-500 font-bold uppercase tracking-wide">Días de Esquí</p>
+                                    <p className="font-bold text-gray-900">Este Fin de Semana</p>
+                                </div>
+                            </div>
+                            <button 
+                                onClick={() => setCurrentStep('results')}
+                                className="bg-forum-blue text-white px-8 py-3 rounded-lg font-extrabold text-lg hover:bg-blue-700 transition flex items-center justify-center shadow-lg transform hover:-translate-y-1 md:w-auto w-full"
+                            >
+                                BUSCAR MATERIAL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const ProductList = () => {
+                const products = [
+                    {
+                        id: 1,
+                        name: "Pack Esquí Alpino Performance",
+                        brand: "Salomon / Atomic",
+                        // Imagen de esquís en nieve
+                        image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        price: 45,
+                        originalPrice: 500,
+                        ecoSave: "12kg CO2",
+                        tags: ["Recomendado", "Intermedio"]
+                    },
+                    {
+                        id: 2,
+                        name: "Pack Snowboard Freestyle",
+                        brand: "Burton",
+                        // Imagen de Snowboard
+                        image: "https://images.unsplash.com/photo-1565992441121-4367c2967103?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        price: 48,
+                        originalPrice: 550,
+                        ecoSave: "14kg CO2",
+                        tags: ["All Mountain"]
+                    },
+                    {
+                        id: 3,
+                        name: "Pack Iniciación Confort",
+                        brand: "Head",
+                        // Imagen de Botas/Esquí relax
+                        image: "https://images.squarespace-cdn.com/content/v1/54bdcba5e4b08f92b173441f/1549822353709-XWKQ4VTCXVSS47BMXP0O/ski-weights-head.jpg",
+                        price: 35,
+                        originalPrice: 350,
+                        ecoSave: "10kg CO2",
+                        tags: ["Principiante"]
+                    }
+                ];
+
+                const activities = [
+                    {
+                        id: 101,
+                        name: "Cursillo de Iniciación (Grupal)",
+                        duration: "2 horas",
+                        price: 35,
+                        // IMAGEN CORREGIDA: Grupo en la nieve
+                        image: "https://images.unsplash.com/photo-1516713788091-a1286c750b64?auto=format&fit=crop&w=800&q=80",
+                        level: "Principiante",
+                        desc: "Aprende las bases con monitores certificados."
+                    },
+                    {
+                        id: 102,
+                        name: "Clase de Perfeccionamiento",
+                        duration: "1 hora (Privada)",
+                        price: 55,
+                        // IMAGEN ACTUALIZADA: Esquiador olímpico / salto mortal
+                        image: "https://images.unsplash.com/photo-1612994022741-68cb8c424432?q=80&w=800&auto=format&fit=crop",
+                        level: "Avanzado",
+                        desc: "Corrige postura y mejora tu técnica de carving."
+                    }
+                ];
+
+                return (
+                    <div className="max-w-7xl mx-auto px-4 py-12 fade-in">
+                        {/* SECCIÓN MATERIAL */}
+                        <div className="mb-16">
+                            <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Material Disponible</h2>
+                            <p className="text-gray-500 mb-8 flex items-center">
+                                <i className="fa-solid fa-location-dot mr-2 text-forum-blue"></i>
+                                Recogida en: <span className="font-bold text-gray-800 ml-1">Sierra Nevada (FS Urban)</span>
+                                <span className="mx-3 text-gray-300">|</span>
+                                <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded font-medium">3 packs recomendados para ti</span>
+                            </p>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {products.map(product => (
+                                    <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 flex flex-col">
+                                        <div className="relative h-48 group cursor-pointer overflow-hidden">
+                                            <img src={product.image} alt={product.name} className="w-full h-full object-cover transition duration-700 group-hover:scale-110" onError={(e) => {e.target.src='https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=500&q=60'; e.target.onerror=null;}} />
+                                            {product.tags.includes("Recomendado") && (
+                                                <div className="absolute top-4 left-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold shadow-sm flex items-center">
+                                                    <i className="fa-solid fa-star mr-1"></i> Top Ventas
+                                                </div>
+                                            )}
+                                        </div>
+                                        
+                                        <div className="p-6 flex-1 flex flex-col">
+                                            <div className="flex justify-between items-start mb-2">
+                                                <div>
+                                                    <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">{product.brand}</p>
+                                                    <h3 className="text-lg font-bold text-gray-900 mt-1 leading-tight">{product.name}</h3>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="mt-auto pt-4">
+                                                <div className="flex justify-between items-end mb-4">
+                                                     <div className="text-xs text-green-700 bg-green-50 px-2 py-1 rounded border border-green-100 font-medium inline-flex items-center">
+                                                        <i className="fa-solid fa-leaf mr-1"></i> Ahorras {product.ecoSave} CO2
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <p className="text-2xl font-extrabold forum-blue">{product.price}€</p>
+                                                        <p className="text-xs text-gray-400 font-medium">/día</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex gap-3">
+                                                    <button 
+                                                        onClick={() => openAiAdvisor(product)}
+                                                        className="flex-1 bg-blue-50 text-blue-600 py-2.5 rounded-lg font-bold text-sm hover:bg-blue-100 transition flex items-center justify-center border border-blue-200"
+                                                    >
+                                                        <i className="fa-solid fa-wand-magic-sparkles mr-2"></i>
+                                                        Info AI
+                                                    </button>
+                                                    <button 
+                                                        onClick={() => {
+                                                            setCart([product]);
+                                                            setCurrentStep('checkout');
+                                                        }}
+                                                        className="flex-1 bg-forum-blue text-white py-2.5 rounded-lg font-bold text-sm hover:bg-blue-700 transition shadow-md uppercase tracking-wide"
+                                                    >
+                                                        Alquilar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* NUEVA SECCIÓN: ACTIVIDADES Y CURSOS */}
+                        <div className="pt-8 border-t border-gray-200">
+                            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                                <span className="bg-orange-100 p-2 rounded-lg text-orange-600 mr-3">
+                                    <i className="fa-solid fa-person-skiing"></i>
+                                </span>
+                                Completa tu experiencia: Cursos y Actividades
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {activities.map(act => (
+                                    <div key={act.id} className="bg-white rounded-xl border border-gray-200 p-4 flex gap-4 hover:border-blue-300 transition cursor-pointer group">
+                                        <div className="w-32 h-32 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
+                                            {/* Añadido onError para fallback robusto */}
+                                            <img 
+                                                src={act.image} 
+                                                className="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
+                                                alt={act.name} 
+                                                onError={(e) => {e.target.src='https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=500&q=60'; e.target.onerror=null;}} 
+                                            />
+                                        </div>
+                                        <div className="flex-1 flex flex-col justify-between">
+                                            <div>
+                                                <div className="flex justify-between items-start">
+                                                    <h3 className="font-bold text-lg text-gray-900 leading-tight">{act.name}</h3>
+                                                    <span className="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-1 rounded">{act.level}</span>
+                                                </div>
+                                                <p className="text-sm text-gray-500 mt-1">{act.desc}</p>
+                                                <p className="text-xs text-gray-400 mt-2 font-medium uppercase"><i className="fa-regular fa-clock mr-1"></i> {act.duration}</p>
+                                            </div>
+                                            <div className="flex justify-between items-center mt-3">
+                                                <span className="font-extrabold text-xl text-gray-900">{act.price}€</span>
+                                                <button className="text-forum-blue font-bold text-sm hover:underline">Añadir a reserva <i className="fa-solid fa-plus ml-1"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                );
+            };
+
+            const Checkout = () => {
+                const item = cart[0];
+                return (
+                    <div className="max-w-4xl mx-auto px-4 py-12 fade-in">
+                        <button onClick={() => setCurrentStep('results')} className="text-gray-500 hover:text-blue-600 mb-6 flex items-center font-medium transition group">
+                            <i className="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition"></i> Volver a Material
+                        </button>
+
+                        <div className="flex flex-col md:flex-row gap-8">
+                            {/* Summary */}
+                            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:w-2/3">
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                                    <i className="fa-solid fa-list-check text-forum-blue mr-3"></i> Resumen de Reserva
+                                </h2>
+                                
+                                <div className="flex items-start mb-8 pb-8 border-b border-gray-100">
+                                    <img src={item.image} className="w-28 h-28 rounded-lg object-cover mr-6 shadow-sm" alt="Item" />
+                                    <div className="flex-1">
+                                        <h3 className="font-bold text-xl text-gray-900">{item.name}</h3>
+                                        <p className="text-gray-500 text-sm mt-1">{item.brand}</p>
+                                        <div className="mt-3 flex items-center text-sm text-gray-600 bg-gray-50 inline-block px-3 py-1 rounded">
+                                            <i className="fa-regular fa-calendar mr-2"></i> Fin de semana (2 días)
+                                        </div>
+                                    </div>
+                                    <div className="font-bold text-2xl forum-blue">{item.price * 2}€</div>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-bold text-gray-800 flex items-center mb-4 text-sm uppercase tracking-wide">
+                                        <i className="fa-solid fa-user-check mr-2 text-forum-blue"></i>
+                                        Datos validados (Data Cloud)
+                                    </h4>
+                                    <div className="bg-blue-50/50 p-6 rounded-xl border border-blue-100 grid grid-cols-2 gap-y-6 gap-x-4">
+                                        <div>
+                                            <label className="text-xs text-gray-400 uppercase font-bold tracking-wider block mb-1">Titular</label>
+                                            <p className="font-bold text-gray-800 text-lg">{userProfile.name}</p>
+                                        </div>
+                                        <div>
+                                            <label className="text-xs text-gray-400 uppercase font-bold tracking-wider block mb-1">Punto Recogida</label>
+                                            <p className="font-bold forum-blue text-lg">FS Urban Centro</p>
+                                        </div>
+                                        <div>
+                                            <label className="text-xs text-gray-400 uppercase font-bold tracking-wider block mb-1">Talla Bota</label>
+                                            <p className="font-bold text-gray-800">{userProfile.shoeSize} <i className="fa-solid fa-circle-check text-green-500 ml-1" title="Validado"></i></p>
+                                        </div>
+                                        <div>
+                                            <label className="text-xs text-gray-400 uppercase font-bold tracking-wider block mb-1">Perfil Físico</label>
+                                            <p className="font-bold text-gray-800">{userProfile.height} / {userProfile.weight}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Payment */}
+                            <div className="md:w-1/3">
+                                <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-lg sticky top-24">
+                                    <h3 className="font-bold text-gray-900 mb-6 text-lg">Desglose de Pago</h3>
+                                    <div className="space-y-3 mb-6">
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-gray-600">Alquiler Material (2 días)</span>
+                                            <span className="font-bold">{item.price * 2}€</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-gray-600">Seguro Rotura/Robo</span>
+                                            <span className="text-green-600 font-bold">INCLUIDO (Club)</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm pt-2 border-t border-dashed border-gray-200">
+                                            <span className="text-gray-600">Actividades extra</span>
+                                            <span className="text-gray-400">--</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex justify-between pt-4 border-t border-gray-200">
+                                        <span className="font-bold text-lg text-gray-900">Total</span>
+                                        <span className="font-extrabold text-2xl forum-blue">{item.price * 2}€</span>
+                                    </div>
+                                    
+                                    <button 
+                                        onClick={() => setCurrentStep('success')}
+                                        className="w-full bg-forum-blue text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition shadow-lg mt-8 transform hover:scale-[1.02] active:scale-95 flex justify-center items-center"
+                                    >
+                                        Confirmar Reserva <i className="fa-solid fa-chevron-right ml-2 text-sm"></i>
+                                    </button>
+                                    <p className="text-xs text-center text-gray-400 mt-4 flex items-center justify-center">
+                                        <i className="fa-solid fa-lock mr-1"></i> Transacción segura SSL
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            };
+
+            const Success = () => (
+                <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4 fade-in max-w-2xl mx-auto">
+                    <div className="w-28 h-28 bg-green-100 rounded-full flex items-center justify-center mb-8 shadow-sm animate-bounce">
+                        <i className="fa-solid fa-check text-green-600 text-5xl"></i>
+                    </div>
+                    <h2 className="text-4xl font-extrabold text-gray-900 mb-6">¡Todo listo para la nieve!</h2>
+                    <p className="text-xl text-gray-600 mb-10 leading-relaxed">
+                        Tu equipo te estará esperando en <strong class="text-gray-900">FS Urban Centro</strong>.
+                        <br/>
+                        <span className="inline-flex items-center mt-4 bg-green-50 text-green-800 px-4 py-2 rounded-full text-base font-bold border border-green-200">
+                            <i className="fa-solid fa-leaf mr-2"></i> Has evitado la emisión de 24kg de CO2
+                        </span>
+                    </p>
+                    
+                    <div className="bg-white p-8 rounded-2xl border-2 border-dashed border-gray-300 w-full mb-8 relative overflow-hidden group hover:border-forum-blue transition cursor-pointer">
+                        <div className="absolute top-0 right-0 bg-gray-100 px-3 py-1 rounded-bl-lg text-xs font-bold text-gray-500">RENTING PASS</div>
+                        <p className="text-xs text-gray-400 uppercase font-bold tracking-widest mb-2">Tu código de recogida</p>
+                        <p className="text-4xl font-mono font-black text-forum-blue tracking-wider group-hover:scale-110 transition duration-300">#NEWE-FS-9982</p>
+                    </div>
+
+                    <button 
+                        onClick={() => setCurrentStep('home')}
+                        className="text-gray-500 font-bold hover:text-forum-blue transition flex items-center"
+                    >
+                        <i className="fa-solid fa-house mr-2"></i> Volver al inicio
+                    </button>
+                </div>
+            );
+
+            // --- AI MODAL ---
+            const AiAdvisorModal = () => (
+                <div className={`fixed inset-0 z-[100] flex items-center justify-center px-4 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${showAiModal ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+                    <div className={`bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden transform transition-all duration-300 ${showAiModal ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}>
+                        <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-4 flex justify-between items-center text-white">
+                            <div className="flex items-center gap-3">
+                                <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
+                                    <i className="fa-solid fa-robot text-lg"></i>
+                                </div>
+                                <span className="font-bold text-lg">Mikel (Experto Forum Sport)</span>
+                            </div>
+                            <button onClick={() => setShowAiModal(false)} className="hover:bg-white/20 w-8 h-8 flex items-center justify-center rounded-full transition">
+                                <i className="fa-solid fa-xmark text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <div className="p-6 bg-gray-50">
+                            <div className="flex items-start gap-4 mb-6">
+                                <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 border border-gray-300 overflow-hidden">
+                                    <i className="fa-solid fa-user text-gray-500"></i>
+                                </div>
+                                <div className="bg-white rounded-2xl rounded-tl-none p-4 text-sm text-gray-700 shadow-sm border border-gray-100">
+                                    ¿Es el pack <strong>{selectedPack?.name}</strong> adecuado para mí? Mido 1.80m y soy nivel intermedio.
+                                </div>
+                            </div>
+
+                            <div className="flex items-start gap-4">
+                                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 border border-blue-200">
+                                    <i className="fa-solid fa-wand-magic-sparkles text-blue-600"></i>
+                                </div>
+                                <div className="bg-blue-50 border border-blue-100 rounded-2xl rounded-tl-none p-4 text-sm text-gray-800 shadow-sm w-full min-h-[80px]">
+                                    {isLoadingAi ? (
+                                        <div className="flex items-center gap-3 text-blue-600 font-medium h-full py-2">
+                                            <i className="fa-solid fa-circle-notch fa-spin"></i> Analizando tu perfil...
+                                        </div>
+                                    ) : (
+                                        <p className="leading-relaxed whitespace-pre-line">{aiResponse}</p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="p-4 border-t border-gray-100 bg-white flex justify-end">
+                            <button 
+                                onClick={() => setShowAiModal(false)}
+                                className="bg-gray-800 text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-gray-900 transition shadow-sm"
+                            >
+                                Entendido
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="min-h-screen flex flex-col">
+                    <Header />
+                    
+                    <main className="flex-grow">
+                        {currentStep === 'home' && <Hero />}
+                        {currentStep === 'results' && <ProductList />}
+                        {currentStep === 'checkout' && <Checkout />}
+                        {currentStep === 'success' && <Success />}
+                    </main>
+
+                    {/* Footer Simple */}
+                    <footer className="bg-white border-t border-gray-200 py-8 mt-auto">
+                        <div className="max-w-7xl mx-auto px-4 text-center text-gray-400 text-sm">
+                            <p className="mb-2 font-medium">© 2024 Forum Sport S.A.</p>
+                            <div className="flex justify-center gap-6 text-xs uppercase tracking-wide">
+                                <span className="hover:text-forum-blue cursor-pointer transition">Privacidad</span>
+                                <span className="hover:text-forum-blue cursor-pointer transition">Términos Newe</span>
+                                <span className="hover:text-forum-blue cursor-pointer transition">Club FS</span>
+                            </div>
+                        </div>
+                    </footer>
+
+                    <AiAdvisorModal />
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<RentingApp />);
+    </script>
+</body>
+</html>

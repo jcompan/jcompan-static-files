@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Forum Sport - Endless Aisle</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel para JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function POSEndlessAisle() {
+            const [selectedColor, setSelectedColor] = useState('turquoise');
+            const [selectedSize, setSelectedSize] = useState('43.5');
+            const [deliveryMethod, setDeliveryMethod] = useState('home');
+
+            return (
+                <div className="bg-gray-100 min-h-screen font-sans flex items-center justify-center p-4">
+                
+                {/* TABLET FRAME */}
+                <div className="w-full max-w-[1024px] bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-300 flex flex-col h-[768px]">
+                    
+                    {/* --- HEADER POS --- */}
+                    <header className="bg-[#005eb8] text-white p-4 flex justify-between items-center shadow-md z-10">
+                    <div className="flex items-center gap-4">
+                        <button><i className="fa-solid fa-bars text-2xl"></i></button>
+                        <div className="flex items-center gap-3">
+                        {/* LOGO */}
+                        <img 
+                            src="https://www.forumsport.com/medias/forumsportIcon-mobile.png?context=bWFzdGVyfGltYWdlc3w5MDUzfGltYWdlL3BuZ3xhRGN3TDJnek1TOHhNVGcwTURnM056VXlOekEzTUM5bWIzSjFiWE53YjNKMFNXTnZibDl0YjJKcGJHVXVjRzVufGU3MGQxNTNmYzc0OTY3ZjQ3ZmQ1ODI1NWQ3OTk3MGI4MDYxZDc1OTUwMjJmMWI0Nzc4MmE5MGY2YmFmMTYzNGE" 
+                            alt="Forum Sport Logo" 
+                            className="h-10 w-auto bg-white rounded p-1" 
+                        />
+                        <div className="flex flex-col border-l border-white/30 pl-3">
+                            <span className="font-bold text-sm tracking-wide">STORE APP</span>
+                            <span className="text-[10px] opacity-80">FS Urban Calle Mayor | Mikel</span>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-6">
+                        <div className="bg-white/10 px-4 py-2 rounded-lg flex items-center gap-3 border border-white/20">
+                        <div className="relative">
+                            <i className="fa-regular fa-user text-xl"></i>
+                            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-400 rounded-full border border-[#005eb8]"></span>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-sm font-bold leading-none">Álex Martínez</p>
+                            <p className="text-[10px] opacity-80">Socio Club Gold • Gijón</p>
+                        </div>
+                        </div>
+                        <div className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded flex items-center gap-1">
+                        <i className="fa-solid fa-triangle-exclamation"></i> Fascitis Plantar
+                        </div>
+                    </div>
+                    </header>
+
+                    {/* --- MAIN CONTENT --- */}
+                    <div className="flex flex-1 overflow-hidden">
+                    
+                    {/* LEFT: PRODUCT & SELECTION */}
+                    <div className="w-1/2 p-6 overflow-y-auto border-r border-gray-200">
+                        
+                        {/* Search Bar */}
+                        <div className="relative mb-6">
+                        <input type="text" value="ASICS GEL-NIMBUS 28" className="w-full bg-gray-100 border border-gray-300 rounded-lg py-3 pl-10 pr-12 text-gray-700 font-bold" readOnly />
+                        <i className="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-gray-400 text-lg"></i>
+                        <i className="fa-solid fa-barcode absolute right-3 top-3.5 text-gray-500 cursor-pointer text-xl"></i>
+                        </div>
+
+                        {/* Product View */}
+                        <div className="flex gap-6 mb-6">
+                        <div className="w-40 h-40 bg-gray-50 rounded-xl border border-gray-100 p-2 flex items-center justify-center overflow-hidden">
+                            {/* Imagen Asics con filtro CSS para simular el verde turquesa */}
+                            <img 
+                            src="https://www.forumsport.com/images/asics-zapatilla-running-hombre-gel-nimbus-28-lateral-exterior-1001072205-1000x1000-f" 
+                            alt="Asics Nimbus 28" 
+                            className="max-w-full max-h-full object-contain"
+                            style={{ filter: 'hue-rotate(90deg) brightness(1.1)' }}
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <h2 className="text-xl font-extrabold text-gray-800 leading-tight">ASICS GEL-NIMBUS 28</h2>
+                            <p className="text-gray-500 text-sm mb-2">Ref: 882910-TURQ</p>
+                            <div className="flex items-center gap-2 mb-2">
+                            <span className="text-2xl font-bold text-[#005eb8]">179,99€</span>
+                            <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded font-bold">-15% CLUB</span>
+                            </div>
+                            <p className="text-xs text-green-600 font-bold flex items-center gap-1">
+                            <i className="fa-solid fa-circle-check"></i> Máxima Amortiguación
+                            </p>
+                        </div>
+                        </div>
+
+                        {/* Attributes Selection */}
+                        <div className="space-y-6">
+                        <div>
+                            <p className="text-xs font-bold text-gray-500 uppercase mb-2">Color Seleccionado</p>
+                            <div className="flex gap-3">
+                            <button 
+                                onClick={() => setSelectedColor('turquoise')}
+                                className={`w-10 h-10 rounded-full bg-[#20B2AA] border-2 ring-2 ring-offset-1 transition-all ${selectedColor === 'turquoise' ? 'border-white ring-[#005eb8]' : 'border-transparent ring-transparent'}`}
+                            ></button>
+                            <button 
+                                onClick={() => setSelectedColor('black')}
+                                className={`w-10 h-10 rounded-full bg-black border-2 ring-2 ring-offset-1 opacity-50`}
+                            ></button>
+                            <button 
+                                onClick={() => setSelectedColor('orange')}
+                                className={`w-10 h-10 rounded-full bg-orange-500 border-2 ring-2 ring-offset-1 opacity-50`}
+                            ></button>
+                            </div>
+                            <p className="text-sm font-medium mt-1 text-[#20B2AA]">Verde Turquesa (Island Blue)</p>
+                        </div>
+
+                        <div>
+                            <p className="text-xs font-bold text-gray-500 uppercase mb-2">Talla (Recomendada: 43.5)</p>
+                            <div className="flex flex-wrap gap-2">
+                            {['42', '42.5', '43', '43.5', '44', '44.5'].map(size => (
+                                <button 
+                                key={size}
+                                onClick={() => setSelectedSize(size)}
+                                className={`px-4 py-2 rounded border text-sm font-bold transition ${
+                                    size === '43.5' 
+                                    ? 'bg-[#005eb8] text-white border-[#005eb8] shadow-md transform scale-105' 
+                                    : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300'
+                                }`}
+                                >
+                                {size}
+                                </button>
+                            ))}
+                            </div>
+                        </div>
+                        </div>
+
+                    </div>
+
+                    {/* RIGHT: STOCK & FULFILLMENT (OMS) */}
+                    <div className="w-1/2 bg-gray-50 p-6 flex flex-col">
+                        
+                        {/* STOCK STATUS CARD */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+                        <h3 className="text-sm font-bold text-gray-400 uppercase mb-3 flex items-center gap-2">
+                            <i className="fa-solid fa-box-open"></i> Disponibilidad Global (OMS)
+                        </h3>
+                        
+                        {/* Local Store Status */}
+                        <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-100">
+                            <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center text-red-500">
+                                <i className="fa-solid fa-location-dot text-lg"></i>
+                            </div>
+                            <div>
+                                <p className="font-bold text-gray-800">Tienda Actual (FS Urban)</p>
+                                <p className="text-xs text-gray-500">Calle Mayor</p>
+                            </div>
+                            </div>
+                            <span className="text-red-600 font-bold bg-red-50 px-3 py-1 rounded text-sm">AGOTADO</span>
+                        </div>
+
+                        {/* Endless Aisle Status */}
+                        <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-green-600">
+                                <i className="fa-solid fa-warehouse text-lg"></i>
+                            </div>
+                            <div>
+                                <p className="font-bold text-gray-800">Almacén Central</p>
+                                <p className="text-xs text-gray-500">Vizcaya Hub</p>
+                            </div>
+                            </div>
+                            <div className="text-right">
+                            <span className="text-green-600 font-bold text-sm block">✓ DISPONIBLE</span>
+                            <span className="text-xs text-gray-400">50+ unidades</span>
+                            </div>
+                        </div>
+                        </div>
+
+                        {/* FULFILLMENT OPTIONS */}
+                        <h3 className="text-sm font-bold text-gray-400 uppercase mb-3">Método de Entrega</h3>
+                        <div className="space-y-3 mb-auto">
+                        
+                        {/* Option: Ship to Home (Selected) */}
+                        <div 
+                            className={`p-4 rounded-xl border-2 cursor-pointer transition flex items-start gap-3 relative ${deliveryMethod === 'home' ? 'bg-blue-50 border-[#005eb8]' : 'bg-white border-gray-200'}`}
+                            onClick={() => setDeliveryMethod('home')}
+                        >
+                            {deliveryMethod === 'home' && (
+                            <div className="absolute top-3 right-3 text-[#005eb8]"><i className="fa-solid fa-circle-check text-xl"></i></div>
+                            )}
+                            <div className={`p-2 rounded-full w-10 h-10 flex items-center justify-center ${deliveryMethod === 'home' ? 'bg-[#005eb8] text-white' : 'bg-gray-100 text-gray-400'}`}>
+                            <i className="fa-solid fa-truck"></i>
+                            </div>
+                            <div className="flex-1">
+                            <p className={`font-bold text-sm ${deliveryMethod === 'home' ? 'text-[#005eb8]' : 'text-gray-700'}`}>Envío a Domicilio (Endless Aisle)</p>
+                            <p className="text-xs text-gray-500 mt-1">Entrega en 24h (Gratis Socio)</p>
+                            
+                            {/* Address from Data Cloud */}
+                            {deliveryMethod === 'home' && (
+                                <div className="mt-3 bg-white/60 p-2 rounded border border-blue-100 text-xs text-gray-700">
+                                <p className="font-bold mb-1">Dirección de Álex (Predeterminada):</p>
+                                <p>Calle Corrida, 12, 4º B</p>
+                                <p>33206 Gijón, Asturias</p>
+                                <button className="text-[#005eb8] underline mt-1 font-semibold">Cambiar</button>
+                                </div>
+                            )}
+                            </div>
+                        </div>
+
+                        {/* Option: Click & Collect */}
+                        <div 
+                            className={`p-4 rounded-xl border-2 cursor-pointer transition flex items-center gap-3 ${deliveryMethod === 'store' ? 'bg-blue-50 border-[#005eb8]' : 'bg-white border-gray-200 opacity-60'}`}
+                            onClick={() => setDeliveryMethod('store')}
+                        >
+                            <div className={`p-2 rounded-full w-10 h-10 flex items-center justify-center ${deliveryMethod === 'store' ? 'bg-[#005eb8] text-white' : 'bg-gray-100 text-gray-400'}`}>
+                            <i className="fa-solid fa-shop"></i>
+                            </div>
+                            <div>
+                            <p className="font-bold text-sm text-gray-700">Recogida en otra tienda</p>
+                            <p className="text-xs text-gray-500">2-3 días laborables</p>
+                            </div>
+                        </div>
+                        </div>
+
+                        {/* ACTION FOOTER */}
+                        <div className="mt-6 pt-6 border-t border-gray-200">
+                        <div className="flex justify-between items-center mb-4">
+                            <span className="text-gray-500 text-sm">Total a pagar</span>
+                            <span className="text-2xl font-black text-gray-900">179,99€</span>
+                        </div>
+                        <button className="w-full bg-[#005eb8] hover:bg-blue-700 text-white py-4 rounded-xl font-bold text-lg shadow-lg flex items-center justify-center gap-2 transition transform active:scale-95">
+                            <i className="fa-regular fa-credit-card"></i>
+                            CONFIRMAR PEDIDO OMS
+                        </button>
+                        <p className="text-center text-[10px] text-gray-400 mt-3 flex items-center justify-center gap-1">
+                            <span className="w-2 h-2 rounded-full bg-green-500"></span> Stock reservado en almacén por 15 min
+                        </p>
+                        </div>
+
+                    </div>
+                    </div>
+                </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<POSEndlessAisle />);
+    </script>
+</body>
+</html>

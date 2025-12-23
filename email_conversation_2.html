@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gmail - Re: Para tu fascitis plantar... estas son las finalistas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #f6f8fc; }
+        .email-container { max-width: 100%; height: 100vh; display: flex; flex-direction: column; }
+        
+        /* Simulación de entrada */
+        .email-item { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .email-item.visible { opacity: 1; transform: translateY(0); }
+        
+        /* Estilos específicos para el Email Marketing incrustado */
+        .marketing-content { font-family: 'Montserrat', sans-serif; }
+    </style>
+</head>
+<body class="overflow-hidden">
+
+    <div class="email-container">
+        
+        <!-- GMAIL HEADER -->
+        <header class="bg-white p-3 flex items-center justify-between border-b border-gray-200 shadow-sm shrink-0 z-20">
+            <div class="flex items-center gap-4 w-64">
+                <i class="fa-solid fa-bars text-gray-600 text-lg p-2 cursor-pointer"></i>
+                <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r2.png" alt="Gmail" class="h-6 opacity-70">
+            </div>
+            <div class="flex-1 max-w-3xl px-4">
+                <div class="bg-[#f1f3f4] rounded-lg h-12 flex items-center px-4 transition focus-within:bg-white focus-within:shadow-md">
+                    <i class="fa-solid fa-magnifying-glass text-gray-500 mr-4"></i>
+                    <input type="text" value="in:inbox subject:(Fascitis)" class="bg-transparent border-none outline-none w-full text-gray-700 placeholder-gray-500" readonly>
+                    <i class="fa-solid fa-sliders text-gray-500 ml-4 cursor-pointer"></i>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 w-64 justify-end pr-2 text-gray-600">
+                <div class="w-8 h-8 bg-purple-600 rounded-full text-white flex items-center justify-center font-bold text-sm cursor-pointer">A</div>
+            </div>
+        </header>
+
+        <div class="flex flex-1 overflow-hidden">
+            
+            <!-- EMAIL CONTENT AREA (Sidebar removed) -->
+            <div class="flex-1 bg-white m-0 md:m-2 md:rounded-2xl shadow-none md:shadow-sm overflow-y-auto relative scroll-smooth" id="scrollContainer">
+                
+                <!-- Toolbar -->
+                <div class="sticky top-0 bg-white border-b border-gray-100 px-4 py-2 flex items-center gap-4 text-gray-600 z-10">
+                    <i class="fa-solid fa-arrow-left p-2 hover:bg-gray-100 rounded-full cursor-pointer"></i>
+                    <i class="fa-regular fa-trash-can p-2 hover:bg-gray-100 rounded-full cursor-pointer"></i>
+                    <div class="border-l border-gray-300 h-5 mx-1"></div>
+                    <i class="fa-regular fa-envelope p-2 hover:bg-gray-100 rounded-full cursor-pointer"></i>
+                </div>
+
+                <div class="px-8 py-6 max-w-4xl mx-auto">
+                    
+                    <!-- Subject -->
+                    <div class="flex justify-between items-start mb-8">
+                        <h1 class="text-[22px] text-[#1f1f1f] leading-tight">Re: Para tu fascitis plantar... estas son las finalistas <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded ml-2 align-middle">Inbox</span></h1>
+                    </div>
+
+                    <!-- EMAIL 1: AGENTFORCE (MARKETING INICIAL) -->
+                    <!-- Simula estar colapsado o expandido según Gmail -->
+                    <div class="email-item mb-2 border border-gray-200 rounded-lg overflow-hidden" id="email1">
+                        <div class="bg-gray-50 px-4 py-3 cursor-pointer flex justify-between items-center border-b border-gray-100">
+                            <div class="flex items-center gap-3">
+                                <span class="font-bold text-sm text-[#1f1f1f]">Forum Sport (Agentforce)</span>
+                                <span class="text-xs text-gray-500">&lt;news@forumsport.com&gt;</span>
+                            </div>
+                            <span class="text-xs text-gray-500">10:00 AM</span>
+                        </div>
+                        
+                        <!-- Contenido visual del email de marketing incrustado -->
+                        <div class="p-6 bg-white marketing-content">
+                            <div class="text-center mb-6">
+                                <img src="https://appfsclub.forumsport.com/file-uploader-folder/nvvwu4l8viysp6t57a7aj4d2c4e6c8c95a8a5c36e08d4aed2f21e684czdsqjvgnxaeux09rf.jpg" alt="Logo" class="h-8 mx-auto mb-4">
+                                <div class="inline-block bg-gradient-to-r from-[#005eb8] to-[#00c2cb] text-white text-[10px] font-bold px-3 py-1 rounded-full mb-2">
+                                    ⚡ SELECCIÓN DE AGENTFORCE
+                                </div>
+                                <h2 class="text-xl font-extrabold text-black leading-tight">Álex, para tu fascitis plantar...<br>estas son las finalistas.</h2>
+                            </div>
+                            
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                                <!-- Card 1 -->
+                                <div class="border-2 border-[#00c2cb] rounded-lg p-4 text-center flex-1 relative bg-white">
+                                    <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-[#00c2cb] text-[#004990] text-[9px] font-bold px-2 rounded-full">RECOMENDADO</div>
+                                    <img src="https://www.forumsport.com/images/hoka-zapatilla-running-hombre-zapatilla-bondi-9-lateral-exterior-1001049502-1000x1000-f" class="w-32 mx-auto mb-2">
+                                    <h3 class="font-bold text-sm">HOKA BONDI 9</h3>
+                                    <p class="text-[10px] text-gray-500 mb-2">"Arco Rocker que reduce tensión"</p>
+                                    <button class="bg-[#005eb8] text-white text-[10px] px-3 py-1.5 rounded font-bold uppercase">Ver Hoka</button>
+                                </div>
+                                <!-- Card 2 -->
+                                <div class="border border-gray-200 rounded-lg p-4 text-center flex-1 bg-white">
+                                    <img src="https://www.forumsport.com/images/asics-zapatilla-running-hombre-gel-nimbus-28-lateral-exterior-1001072205-1000x1000-f" class="w-32 mx-auto mb-2">
+                                    <h3 class="font-bold text-sm">ASICS NIMBUS 28</h3>
+                                    <p class="text-[10px] text-gray-500 mb-2">"Nube PureGEL™"</p>
+                                    <button class="border border-[#005eb8] text-[#005eb8] text-[10px] px-3 py-1.5 rounded font-bold uppercase">Ver Asics</button>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center mt-6">
+                                <a href="#" class="text-[#005eb8] text-xs font-bold underline">💬 Responder a Agentforce para más info</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EMAIL 2: ALEX (RESPUESTA CLIENTE) -->
+                    <div class="email-item mb-6 relative group" id="email2">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-purple-600 rounded-full text-white flex items-center justify-center font-bold text-lg shrink-0">A</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex justify-between items-baseline">
+                                    <span class="font-bold text-[#1f1f1f] text-sm">Álex <span class="text-gray-500 font-normal">&lt;alex@gmail.com&gt;</span></span>
+                                    <span class="text-xs text-gray-500">10:45 AM (hace 2 horas)</span>
+                                </div>
+                                <div class="text-xs text-gray-500">para Forum Sport</div>
+                                <div class="mt-3 text-sm text-[#202124] leading-relaxed">
+                                    <p>Hola,</p>
+                                    <p class="mt-2">Gracias por el email. Me gustan las dos opciones, pero sigo con dudas.</p>
+                                    <p class="mt-2">Al tener fascitis plantar, necesito que el impacto sea mínimo, pero no quiero sentir que llevo "ladrillos" en los pies. ¿Podríais darme una <strong>comparativa técnica rápida</strong> entre la Bondi 9 y la Nimbus 28 centrada en peso y sensación de pisada?</p>
+                                    <p class="mt-2">Gracias,<br>Álex</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-b border-gray-200 mt-6"></div>
+                    </div>
+
+                    <!-- EMAIL 3: AGENTFORCE (RESPUESTA IA) -->
+                    <div class="email-item mb-10" id="email3">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 border border-gray-200 rounded-full p-0.5 bg-white shrink-0 shadow-sm">
+                                <img src="https://www.forumsport.com/medias/forumsportIcon-mobile.png?context=bWFzdGVyfGltYWdlc3w5MDUzfGltYWdlL3BuZ3xhRGN3TDJnek1TOHhNVGcwTURnM056VXlOekEzTUM5bWIzSjFiWE53YjNKMFNXTnZibDl0YjJKcGJHVXVjRzVufGU3MGQxNTNmYzc0OTY3ZjQ3ZmQ1ODI1NWQ3OTk3MGI4MDYxZDc1OTUwMjJmMWI0Nzc4MmE5MGY2YmFmMTYzNGE" class="w-full h-full object-cover rounded-full" alt="FS">
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-baseline">
+                                    <span class="font-bold text-[#1f1f1f] text-sm">Agentforce (Forum Sport)</span>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-xs text-gray-500">12:30 PM (ahora mismo)</span>
+                                        <div class="flex gap-2 text-gray-500">
+                                            <i class="fa-solid fa-reply hover:text-gray-800 cursor-pointer"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-gray-500">para mí</div>
+                                
+                                <!-- EMAIL BODY CONTENT -->
+                                <div class="mt-4 text-sm text-[#202124] leading-relaxed">
+                                    <p>Hola Álex,</p>
+                                    <p class="mt-2">¡Claro que sí! Ambas son "tope de gama" en amortiguación, pero mecánicamente funcionan de forma diferente. Aquí tienes la comparativa técnica para tu caso:</p>
+
+                                    <!-- AGENTFORCE COMPARISON TABLE -->
+                                    <div class="my-5 border border-gray-200 rounded-lg overflow-hidden max-w-2xl bg-white shadow-sm">
+                                        <table class="w-full text-left border-collapse">
+                                            <thead>
+                                                <tr class="bg-gray-50 border-b border-gray-200">
+                                                    <th class="p-3 text-xs font-bold text-gray-500 uppercase w-1/4">Dato Técnico</th>
+                                                    <th class="p-3 text-xs font-bold text-[#005eb8] uppercase w-1/3">Hoka Bondi 9</th>
+                                                    <th class="p-3 text-xs font-bold text-gray-600 uppercase w-1/3">Asics Nimbus 28</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-sm">
+                                                <tr class="border-b border-gray-100">
+                                                    <td class="p-3 font-medium text-gray-700 bg-gray-50/50">Tecnología</td>
+                                                    <td class="p-3"><strong>Meta-Rocker</strong> (Efecto mecedora)</td>
+                                                    <td class="p-3">PureGEL™ (Impacto talón)</td>
+                                                </tr>
+                                                <tr class="border-b border-gray-100">
+                                                    <td class="p-3 font-medium text-gray-700 bg-gray-50/50">Sensación</td>
+                                                    <td class="p-3">Estable y guiada</td>
+                                                    <td class="p-3">Muy blanda ("Nube")</td>
+                                                </tr>
+                                                <tr class="border-b border-gray-100">
+                                                    <td class="p-3 font-medium text-gray-700 bg-gray-50/50">Peso (43)</td>
+                                                    <td class="p-3 font-bold text-green-600">307g (Más ligera)</td>
+                                                    <td class="p-3">320g</td>
+                                                </tr>
+                                                <tr class="bg-blue-50/30">
+                                                    <td class="p-3 font-medium text-gray-700 bg-blue-50/50">Veredicto AI</td>
+                                                    <td class="p-3 text-[#005eb8] font-medium">Ideal para fascitis: reduce tensión al caminar.</td>
+                                                    <td class="p-3 text-gray-500">Mejor para confort sin patología.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <p><strong>Mi recomendación:</strong> La Hoka Bondi 9. Su suela curva hará parte del trabajo de tu pie.</p>
+                                    <p class="mt-4">Recuerda que <strong>Mikel</strong> te espera esta tarde en <em>FS Urban Calle Mayor</em> para probarlas.</p>
+                                    
+                                    <div class="mt-6">
+                                        <a href="#" class="bg-[#005eb8] text-white px-5 py-2.5 rounded text-sm font-bold no-underline inline-block hover:bg-[#004488] transition">Confirmar visita</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- REPLY BOX -->
+                    <div class="flex gap-4 opacity-50 email-item" id="replyBox">
+                        <div class="w-10 h-10 bg-purple-600 rounded-full text-white flex items-center justify-center font-bold shrink-0">A</div>
+                        <div class="flex-1 border border-gray-200 rounded-lg shadow-sm bg-white p-4 text-gray-400 text-sm">
+                            Responder a Agentforce...
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE SIMULACIÓN -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const email1 = document.getElementById('email1');
+            const email2 = document.getElementById('email2');
+            const email3 = document.getElementById('email3');
+            const replyBox = document.getElementById('replyBox');
+            const container = document.getElementById('scrollContainer');
+
+            // Secuencia de aparición
+            setTimeout(() => {
+                email1.classList.add('visible');
+            }, 500);
+
+            setTimeout(() => {
+                email2.classList.add('visible');
+                // Auto scroll si es necesario
+                if(email2) container.scrollTop = email2.offsetTop - 100;
+            }, 1500);
+
+            setTimeout(() => {
+                email3.classList.add('visible');
+                container.scrollTo({
+                    top: container.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 3000); 
+
+            setTimeout(() => {
+                replyBox.classList.add('visible');
+            }, 3500);
+        });
+    </script>
+
+</body>
+</html>

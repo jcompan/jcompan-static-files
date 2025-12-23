@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valora tu experiencia Forum Sport</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style type="text/css">
+    body { margin: 0; padding: 0; background-color: #f4f4f4; font-family: 'Montserrat', Helvetica, Arial, sans-serif; color: #333333; }
+    table { border-spacing: 0; border-collapse: collapse; }
+    td { padding: 0; }
+    img { border: 0; }
+    
+    .wrapper { width: 100%; table-layout: fixed; background-color: #f4f4f4; padding-bottom: 40px; }
+    .main-table { background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 600px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    
+    /* Estilos Estrellas */
+    .star-rating { 
+        font-size: 40px; 
+        color: #e0e0e0; 
+        cursor: pointer; 
+        text-decoration: none; 
+        padding: 0 5px;
+    }
+    .star-rating:hover, .star-rating.active { color: #ffc107; }
+    
+    /* Botón */
+    .btn-submit {
+        background-color: #005eb8;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 14px;
+        display: inline-block;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0,94,184,0.3);
+    }
+    
+    /* Textarea simulado */
+    .comment-box {
+        width: 80%;
+        max-width: 400px;
+        height: 100px;
+        border: 1px solid #cccccc;
+        border-radius: 8px;
+        padding: 10px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        color: #333;
+        background-color: #fafafa;
+        resize: none;
+        margin-bottom: 20px;
+    }
+
+    @media screen and (max-width: 600px) {
+        .main-table { width: 100% !important; }
+        h1 { font-size: 20px !important; }
+    }
+</style>
+</head>
+<body>
+
+<center class="wrapper">
+    <table class="main-table" width="600">
+        
+        <!-- HEADER -->
+        <tr>
+            <td align="center" style="padding: 25px 0; border-bottom: 1px solid #eeeeee;">
+                <img src="https://appfsclub.forumsport.com/file-uploader-folder/nvvwu4l8viysp6t57a7aj4d2c4e6c8c95a8a5c36e08d4aed2f21e684czdsqjvgnxaeux09rf.jpg" alt="Forum Sport Club" width="160" style="display: block;">
+            </td>
+        </tr>
+
+        <!-- BODY -->
+        <tr>
+            <td align="center" style="padding: 40px 20px 10px 20px;">
+                <h1 style="margin: 0 0 10px 0; color: #000000; font-weight: 800; font-size: 24px; line-height: 1.2;">
+                    ¡Hola Álex! 👋
+                </h1>
+                <p style="margin: 0 0 20px 0; color: #666666; font-size: 16px; line-height: 1.5; max-width: 400px;">
+                    Esperamos que hayas disfrutado de Sierra Nevada a pesar del incidente con la bota. 
+                    <br><br>
+                    Nos gustaría saber qué te pareció la <strong>rapidez de la solución</strong> y el servicio de Renting en general.
+                </p>
+            </td>
+        </tr>
+
+        <!-- STAR RATING -->
+        <tr>
+            <td align="center" style="padding: 10px 0 30px 0;">
+                <p style="font-weight: 700; color: #005eb8; text-transform: uppercase; font-size: 12px; margin-bottom: 15px; letter-spacing: 1px;">Tu valoración nos ayuda a mejorar</p>
+                
+                <!-- En un email real, cada estrella sería un enlace. Aquí simulamos el aspecto visual -->
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td><a href="#" class="star-rating" style="color: #ffc107;">★</a></td>
+                        <td><a href="#" class="star-rating" style="color: #ffc107;">★</a></td>
+                        <td><a href="#" class="star-rating" style="color: #ffc107;">★</a></td>
+                        <td><a href="#" class="star-rating" style="color: #ffc107;">★</a></td>
+                        <td><a href="#" class="star-rating" style="color: #e0e0e0;">★</a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!-- COMMENT BOX & CTA -->
+        <tr>
+            <td align="center" style="padding: 0 20px 40px 20px;">
+                <p style="font-size: 14px; color: #333; margin-bottom: 10px; font-weight: 600;">¿Algún comentario extra?</p>
+                <!-- Formulario Simulado -->
+                <form action="#" method="POST">
+                    <textarea class="comment-box" placeholder="Ej: La atención por WhatsApp fue muy rápida..."></textarea>
+                    <br>
+                    <button type="button" class="btn-submit">Enviar Opinión</button>
+                </form>
+            </td>
+        </tr>
+
+        <!-- FOOTER -->
+        <tr>
+            <td align="center" bgcolor="#f9f9f9" style="padding: 20px; font-size: 11px; color: #999999; border-top: 1px solid #eeeeee;">
+                <p style="margin: 0;">© 2024 Forum Sport S.A. | <a href="#" style="color: #999; text-decoration: underline;">Darse de baja</a></p>
+            </td>
+        </tr>
+
+    </table>
+</center>
+
+</body>
+</html>

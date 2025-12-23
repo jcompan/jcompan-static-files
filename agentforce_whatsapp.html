@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte WhatsApp Forum Sport</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons (Reemplazo de Lucide para HTML simple) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel para JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f0f2f5; }
+        /* Fondo de chat de WhatsApp */
+        .whatsapp-bg {
+            background-color: #e5ddd5;
+            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+            background-repeat: repeat;
+            opacity: 0.9;
+        }
+        /* Ocultar scrollbar pero permitir scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        /* Animaciones de entrada de mensaje */
+        .message-enter {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        function WhatsAppChat() {
+            const [messages, setMessages] = useState([]);
+            const [inputText, setInputText] = useState('');
+            const messagesEndRef = useRef(null);
+
+            // Script de la conversación
+            const conversationScript = [
+                {
+                    id: 1,
+                    sender: 'user',
+                    text: "Hola, tengo un problema URGENTE con el alquiler. Estoy en pistas.",
+                    time: "11:02",
+                    status: 'read'
+                },
+                {
+                    id: 2,
+                    sender: 'agent',
+                    text: "Hola Álex 👋 Soy el asistente virtual de Forum Sport. Veo que tienes una reserva activa (#NEWE-FS-9982). ¿Estás bien? Cuéntame qué ha pasado.",
+                    time: "11:02",
+                    type: "context", 
+                    techNote: "Data Cloud: Identificación inmediata de usuario y reserva activa."
+                },
+                {
+                    id: 3,
+                    sender: 'user',
+                    text: "Se me ha partido el cierre de la bota bajando una roja. No puedo seguir así.",
+                    time: "11:03",
+                    status: 'read'
+                },
+                {
+                    id: 4,
+                    sender: 'user',
+                    image: "https://www.nevasport.com/fotos/270114/541648.jpg", 
+                    text: "Mira, se ha soltado entero.",
+                    time: "11:03",
+                    status: 'read'
+                },
+                {
+                    id: 5,
+                    sender: 'agent',
+                    text: "Vaya, lo siento mucho. 😟 He analizado la foto y confirmo que es un fallo de material, no es culpa tuya. \n\n✅ Tranquilo: La fianza está cubierta al 100%. No te costará nada.",
+                    time: "11:03",
+                    techNote: "Einstein Vision: Análisis de imagen para validar garantía."
+                },
+                {
+                    id: 6,
+                    sender: 'user',
+                    text: "Vale, menos mal... Pero me habéis fastidiado el día. Bajar al pueblo a por otras es perder 2 horas.",
+                    time: "11:04",
+                    status: 'read'
+                },
+                {
+                    id: 7,
+                    sender: 'agent',
+                    text: "¡Quizás no haga falta que bajes! 🛑 Tenemos partners colaboradores en muchas zonas. \n\n¿En qué estación de esquí y zona te encuentras ahora mismo?",
+                    time: "11:04",
+                    techNote: "Agentforce: Solicitud de datos para contextualizar la ayuda."
+                },
+                {
+                    id: 7.5,
+                    sender: 'user',
+                    text: "Estoy en Sierra Nevada, justo en Pradollano, cerca de la Plaza.",
+                    time: "11:05",
+                    status: 'read'
+                },
+                {
+                    id: 8,
+                    sender: 'agent',
+                    text: "¡Perfecto! 🗺️\n\nEstás de suerte: nuestro partner **'Nevada Rent'** está en esa misma plaza, a solo unos metros. \n\nYa he hablado con ellos y tienen unas botas talla 43 reservadas. Ve directo y enseña este QR:",
+                    time: "11:05",
+                    techNote: "Salesforce Maps: Matching de ubicación cliente vs stock partners."
+                },
+                {
+                    id: 9,
+                    sender: 'agent',
+                    image: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=REPLACEMENT-AUTH-FS-9982",
+                    text: "🎫 Pase de Sustitución Express",
+                    time: "11:05"
+                },
+                {
+                    id: 10,
+                    sender: 'user',
+                    text: "Ostras, están aquí al lado. Voy para allá. Gracias por la rapidez.",
+                    time: "11:06",
+                    status: 'read'
+                },
+                {
+                    id: 11,
+                    sender: 'agent',
+                    text: "¡A ti! Que nada te pare. 🎿\nSi necesitas algo más, aquí sigo.",
+                    time: "11:06"
+                }
+            ];
+
+            // Simulación de escritura
+            useEffect(() => {
+                let delay = 0;
+                conversationScript.forEach((msg, index) => {
+                    delay += msg.sender === 'user' ? 1000 : 2500;
+                    setTimeout(() => {
+                        setMessages(prev => [...prev, msg]);
+                    }, delay);
+                });
+            }, []);
+
+            useEffect(() => {
+                messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+            }, [messages]);
+
+            const Header = () => (
+                <div className="bg-[#075e54] p-3 flex items-center justify-between text-white shadow-md sticky top-0 z-50">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/50 bg-white">
+                            <img src="https://www.forumsport.com/medias/forumsportIcon-mobile.png?context=bWFzdGVyfGltYWdlc3w5MDUzfGltYWdlL3BuZ3xhRGN3TDJnek1TOHhNVGcwTURnM056VXlOekEzTUM5bWIzSjFiWE53YjNKMFNXTnZibDl0YjJKcGJHVXVjRzVufGU3MGQxNTNmYzc0OTY3ZjQ3ZmQ1ODI1NWQ3OTk3MGI4MDYxZDc1OTUwMjJmMWI0Nzc4MmE5MGY2YmFmMTYzNGE" alt="Forum Sport" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="leading-tight">
+                            <h3 className="font-bold text-base flex items-center gap-1">
+                                Forum Sport Club <span className="bg-green-400 text-white rounded-full h-4 w-4 flex items-center justify-center text-[10px]"><i className="fa-solid fa-check"></i></span>
+                            </h3>
+                            <p className="text-xs text-green-100 opacity-90">Cuenta de empresa oficial</p>
+                        </div>
+                    </div>
+                    <div className="flex gap-5 text-white/90">
+                        <i className="fa-solid fa-video cursor-pointer hover:text-white transition"></i>
+                        <i className="fa-solid fa-phone cursor-pointer hover:text-white transition"></i>
+                        <i className="fa-solid fa-ellipsis-vertical cursor-pointer hover:text-white transition"></i>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="w-full max-w-md h-[750px] bg-[#e5ddd5] flex flex-col shadow-2xl relative overflow-hidden rounded-xl border border-gray-300">
+                    <Header />
+                    
+                    {/* Chat Area con Fondo WhatsApp */}
+                    <div className="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar whatsapp-bg relative">
+                        
+                        {/* Mensaje de Encriptación */}
+                        <div className="flex justify-center mb-6 mt-2">
+                            <div className="bg-[#ffeb3b]/90 text-gray-700 text-[11px] px-3 py-1.5 rounded-lg text-center shadow-sm max-w-[90%] border border-[#ffeb3b]">
+                                <i className="fa-solid fa-lock mr-1 text-[10px]"></i> Los mensajes con esta cuenta de empresa están seguros y gestionados por Agentforce.
+                            </div>
+                        </div>
+
+                        {messages.map((msg) => (
+                            <div key={msg.id} className={`flex flex-col message-enter ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
+                                
+                                {/* Nota Técnica (Salesforce Context) - Solo visible para Demo */}
+                                {msg.techNote && (
+                                    <div className="mb-1 ml-2 bg-blue-50 border border-blue-200 text-blue-700 text-[10px] px-2 py-1 rounded-md inline-flex items-center gap-1 shadow-sm transform -translate-y-1 animate-pulse max-w-[90%]">
+                                        <i className="fa-brands fa-salesforce text-blue-500 text-sm"></i> <span className="font-bold">Agentforce:</span> {msg.techNote}
+                                    </div>
+                                )}
+
+                                <div 
+                                    className={`max-w-[80%] rounded-lg p-2 shadow-sm relative text-[14px] leading-snug ${
+                                        msg.sender === 'user' 
+                                            ? 'bg-[#dcf8c6] rounded-tr-none text-gray-800' 
+                                            : 'bg-white rounded-tl-none text-gray-800'
+                                    }`}
+                                >
+                                    {/* Nombre Agente */}
+                                    {msg.sender === 'agent' && (
+                                        <p className="text-[12px] font-bold text-[#075e54] mb-1">Agentforce</p>
+                                    )}
+
+                                    {/* Imagen Adjunta */}
+                                    {msg.image && (
+                                        <div className="mb-2 rounded-lg overflow-hidden bg-gray-100 border border-gray-100">
+                                            <img src={msg.image} alt="Attachment" className="w-full h-auto object-cover" />
+                                        </div>
+                                    )}
+
+                                    {/* Ubicación Simulada (Si la hubiera) */}
+                                    {msg.isLocation && (
+                                        <div className="mb-1 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 w-full min-w-[200px]">
+                                            <div className="h-24 bg-gray-300 relative overflow-hidden">
+                                                <div className="absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-400">
+                                                    <i className="fa-solid fa-map-location-dot text-2xl"></i>
+                                                </div>
+                                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-600 drop-shadow-md">
+                                                    <i className="fa-solid fa-location-dot text-3xl"></i>
+                                                </div>
+                                            </div>
+                                            <div className="p-2 bg-white">
+                                                <p className="font-bold text-xs truncate">Ubicación actual</p>
+                                                <p className="text-[10px] text-gray-500 truncate">Sierra Nevada</p>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Texto del Mensaje */}
+                                    {!msg.isLocation && (
+                                        <p className="whitespace-pre-line">{msg.text}</p>
+                                    )}
+                                    
+                                    {/* Hora y Checks */}
+                                    <div className="flex justify-end items-center gap-1 mt-1 select-none">
+                                        <span className="text-[10px] text-gray-500/80">{msg.time}</span>
+                                        {msg.sender === 'user' && (
+                                            <span className={msg.status === 'read' ? 'text-[#34b7f1]' : 'text-gray-400'}>
+                                                <i className="fa-solid fa-check-double text-[10px]"></i>
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        <div ref={messagesEndRef} />
+                    </div>
+
+                    {/* Input Area */}
+                    <div className="bg-[#f0f2f5] p-2 flex items-center gap-3 sticky bottom-0 z-20 border-t border-gray-200">
+                        <div className="text-gray-500 cursor-pointer hover:text-gray-600 transition p-1">
+                            <i className="fa-regular fa-face-smile text-2xl"></i>
+                        </div>
+                        <div className="text-gray-500 cursor-pointer hover:text-gray-600 transition p-1">
+                            <i className="fa-solid fa-plus text-2xl"></i>
+                        </div>
+                        <div className="flex-1 bg-white rounded-lg px-4 py-2 flex items-center shadow-sm border border-white">
+                            <input 
+                                type="text" 
+                                value={inputText}
+                                placeholder="Escribe un mensaje" 
+                                className="w-full outline-none text-base bg-transparent text-gray-700 placeholder-gray-400"
+                                disabled
+                            />
+                        </div>
+                        <div className="text-gray-500 cursor-pointer hover:text-gray-600 transition p-1">
+                            <i className="fa-solid fa-camera text-2xl"></i>
+                        </div>
+                        <div className="text-gray-500 cursor-pointer hover:text-gray-600 transition p-1">
+                            <i className="fa-solid fa-microphone text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<WhatsAppChat />);
+    </script>
+</body>
+</html>

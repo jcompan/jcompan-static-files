@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidad Running Forum Sport</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Resets */
+        body { margin: 0; padding: 0; background-color: #f4f4f4; font-family: 'Montserrat', sans-serif; color: #333333; }
+        table { border-spacing: 0; border-collapse: collapse; }
+        td { padding: 0; }
+        img { border: 0; display: block; }
+        
+        .wrapper { width: 100%; table-layout: fixed; background-color: #f4f4f4; padding-bottom: 40px; }
+        .main-table { background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 600px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        /* Botones */
+        .btn-primary {
+            background-color: #005eb8;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 14px;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0, 94, 184, 0.3);
+        }
+
+        /* Event Card */
+        .event-card {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            padding: 20px;
+            margin: 20px 30px;
+        }
+        
+        /* Perk Box */
+        .perk-box {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff 100%);
+            border: 2px solid #ffcc00; /* Amarillo Club */
+            border-radius: 12px;
+            padding: 20px;
+            margin: 0 30px 30px 30px;
+            position: relative;
+        }
+        .perk-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background-color: #ffcc00;
+            color: #000;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 600px) {
+            .main-table { width: 100% !important; }
+            .hero-title { font-size: 24px !important; }
+            .perk-box { margin: 0 20px 30px 20px; }
+            .event-card { margin: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<center class="wrapper">
+    <table class="main-table" width="600">
+        
+        <!-- HEADER CORREGIDO -->
+        <tr>
+            <td align="center" style="padding: 25px 0; border-bottom: 4px solid #005eb8; background-color: #ffffff;">
+                <img src="https://appfsclub.forumsport.com/file-uploader-folder/nvvwu4l8viysp6t57a7aj4d2c4e6c8c95a8a5c36e08d4aed2f21e684czdsqjvgnxaeux09rf.jpg" alt="Forum Sport Club" width="180" style="display: block; border: 0;">
+            </td>
+        </tr>
+
+        <!-- HERO IMAGE (AÑADIDA) -->
+        <tr>
+            <td>
+                <img src="https://www.forumsport.com/es-es/blogs/running/wp-content/uploads/sites/2/2025/09/portada_v-1024x576.jpg" alt="Comunidad Running" width="600" style="width: 100%; max-width: 600px; height: auto; display: block;">
+            </td>
+        </tr>
+
+        <!-- INTRO TEXT -->
+        <tr>
+            <td style="padding: 30px 30px 10px 30px; text-align: center;">
+                <h1 style="color: #000; margin: 0 0 20px 0; font-size: 24px; font-weight: 800; text-transform: uppercase;">
+                    No corras solo, Álex.
+                </h1>
+                <p style="font-size: 16px; color: #555; line-height: 1.6; margin: 0;">
+                    Sabemos que estrenar zapatillas motiva, pero hacerlo en grupo motiva el doble. 
+                    <br><br>
+                    Como socio del Club, estás invitado a nuestras <strong>salidas semanales en Gijón</strong>. Ritmo suave, buena compañía y vistas al mar.
+                </p>
+            </td>
+        </tr>
+
+        <!-- EVENT DETAILS CARD -->
+        <tr>
+            <td>
+                <div class="event-card">
+                    <table width="100%">
+                        <tr>
+                            <td width="60" valign="top">
+                                <div style="background-color: #005eb8; color: #fff; width: 50px; height: 50px; border-radius: 8px; text-align: center; padding-top: 10px; box-sizing: border-box; font-weight: 800; line-height: 1.1;">
+                                    DOM<br><span style="font-size: 18px;">22</span>
+                                </div>
+                            </td>
+                            <td>
+                                <h3 style="margin: 0 0 5px 0; font-size: 18px; color: #000; font-weight: 800;">Salida Running: "Muro de San Lorenzo"</h3>
+                                <p style="margin: 0 0 10px 0; font-size: 14px; color: #666;">
+                                    📍 <strong>Punto de encuentro:</strong> Escalera 2 (El Reloj)<br>
+                                    🕙 <strong>Hora:</strong> 10:00 AM<br>
+                                    📏 <strong>Distancia:</strong> 5K (Ritmo suave / Recuperación)
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+        <!-- LOYALTY PERK (Dani) -->
+        <tr>
+            <td>
+                <div class="perk-box">
+                    <div class="perk-badge">Beneficio Club Gold</div>
+                    <table width="100%">
+                        <tr>
+                            <td width="70" valign="middle">
+                                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.5&w=150&h=150&q=80" alt="Dani Entrenador" style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ffcc00;">
+                            </td>
+                            <td valign="middle">
+                                <p style="margin: 0 0 5px 0; font-size: 14px; font-weight: 700; color: #000;">
+                                    Tu salud es lo primero
+                                </p>
+                                <p style="margin: 0; font-size: 13px; color: #555; line-height: 1.4;">
+                                    Como eres miembro del Club, puedes reservar <strong>gratis 30 minutos con Dani</strong>, nuestro entrenador de técnica de carrera, antes de la salida para asegurar que tu pisada es correcta y evitar recaídas.
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+        <!-- CTA -->
+        <tr>
+            <td align="center" style="padding-bottom: 40px;">
+                <a href="#" class="btn-primary">Reservar Plaza + Sesión con Dani</a>
+                <p style="font-size: 11px; color: #999; margin-top: 15px;">Solo quedan 3 plazas disponibles para la sesión técnica.</p>
+            </td>
+        </tr>
+
+        <!-- FOOTER -->
+        <tr>
+            <td align="center" bgcolor="#333333" style="padding: 30px; color: #ffffff; font-size: 12px;">
+                <p style="margin: 0 0 10px 0;">Forum Sport Running Community | Gijón</p>
+                <p style="opacity: 0.6; margin: 0;">Has recibido este email porque eres socio del Club Forum Sport y has mostrado interés en Running.</p>
+            </td>
+        </tr>
+
+    </table>
+</center>
+
+</body>
+</html>

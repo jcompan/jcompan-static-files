@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum Sport - Running Store</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons (Reemplazo de Lucide para HTML simple) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel para JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+        /* Animación de entrada para el chat */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+        /* Ocultar scrollbar en sugerencias */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        function WebAgentforceDemo() {
+            const [isChatOpen, setIsChatOpen] = useState(true);
+            const [conversationStep, setConversationStep] = useState('intro'); // intro | proposal | confirmed
+            
+            // --- ESTADO INICIAL: Saludo del Agente ---
+            const [messages, setMessages] = useState([
+                {
+                    id: 1,
+                    sender: 'agent',
+                    text: "¡Hola Álex! 👋 Soy Agentforce, tu experto en running de Forum Sport. ¿En qué te puedo ayudar hoy?",
+                    time: "Now"
+                }
+            ]);
+            
+            const [inputValue, setInputValue] = useState("");
+            const messagesEndRef = useRef(null);
+
+            // Scroll automático
+            useEffect(() => {
+                messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+            }, [messages]);
+
+            // Lógica del Chat
+            const handleSendMessage = () => {
+                if (!inputValue.trim()) return;
+
+                const userMsg = { id: Date.now(), sender: 'user', text: inputValue, time: "Now" };
+                setMessages(prev => [...prev, userMsg]);
+                setInputValue("");
+
+                // Simulación de respuesta inteligente
+                setTimeout(() => {
+                    // CASO 1: Consulta sobre Fascitis (Paso 1 -> Paso 2)
+                    if (inputValue.toLowerCase().includes("fascitis") || inputValue.toLowerCase().includes("hoka") || inputValue.toLowerCase().includes("dolor")) {
+                        const response1 = {
+                            id: Date.now() + 1, 
+                            sender: 'agent', 
+                            text: "Hola Álex. Para la fascitis plantar, la **Hoka Bondi 8** es superior a tus antiguas Nike por su arco meta-rocker que reduce la tensión. Sin embargo, como el cambio de horma es drástico, te recomiendo probarlas antes.",
+                            time: "Now"
+                        };
+                        
+                        const response2 = {
+                            id: Date.now() + 2, 
+                            sender: 'agent', 
+                            text: "He visto que vives cerca de **FS Urban Calle Mayor**. Mikel tiene hueco hoy a las 18:30 para hacerte una prueba de pisada. ¿Te reservo la cita?",
+                            time: "Now"
+                        };
+
+                        setMessages(prev => [...prev, response1]);
+                        
+                        // Pausa dramática para el segundo mensaje
+                        setTimeout(() => {
+                            setMessages(prev => [...prev, response2]);
+                            setConversationStep('proposal'); // Cambiamos estado para actualizar botones
+                        }, 1500);
+
+                    } 
+                    // CASO 2: Confirmación de Cita (Paso 2 -> Fin)
+                    else if (inputValue.toLowerCase().includes("sí") || inputValue.toLowerCase().includes("si") || inputValue.toLowerCase().includes("gracias") || inputValue.toLowerCase().includes("resérvala")) {
+                        setMessages(prev => [...prev, { 
+                            id: Date.now() + 3, 
+                            sender: 'agent', 
+                            text: "¡Hecho! ✅ Cita confirmada para hoy a las 18:30 en FS Urban Calle Mayor. \n\nMikel ya tiene las Hoka Bondi 8 preparadas para ti. ¡Nos vemos luego! 🏃‍♂️", 
+                            time: "Now" 
+                        }]);
+                        setConversationStep('confirmed');
+                    } 
+                    // CASO DEFAULT
+                    else {
+                        setMessages(prev => [...prev, { 
+                            id: Date.now() + 1, 
+                            sender: 'agent', 
+                            text: "Entendido. ¿Necesitas ayuda con algo más sobre tu equipamiento de running?", 
+                            time: "Now" 
+                        }]);
+                    }
+                }, 1000);
+            };
+
+            return (
+                <div className="relative min-h-screen w-full bg-gray-100 overflow-hidden flex flex-col items-center">
+                    
+                    {/* --- FONDO ESTÁTICO (Imagen proporcionada) --- */}
+                    <img 
+                        src="https://jcompan.github.io/jcompan-static-files/forum_web_running.png" 
+                        alt="Fondo Web Forum Sport Running" 
+                        className="fixed top-0 left-0 w-full h-full object-cover object-top pointer-events-none select-none"
+                    />
+
+                    {/* --- WIDGET AGENTFORCE --- */}
+                    <div className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${isChatOpen ? 'w-[350px] md:w-[380px]' : 'w-auto'}`}>
+                        
+                        {/* Botón Abrir Chat */}
+                        {!isChatOpen && (
+                            <button 
+                                onClick={() => setIsChatOpen(true)}
+                                className="bg-[#005eb8] hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl flex items-center gap-2 transition transform hover:scale-110"
+                            >
+                                <div className="relative">
+                                    <i className="fa-solid fa-comment-dots text-2xl"></i>
+                                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-[#005eb8]"></span>
+                                </div>
+                                <span className="font-bold pr-2">Ayuda Experta</span>
+                            </button>
+                        )}
+
+                        {/* Ventana de Chat */}
+                        {isChatOpen && (
+                            <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col h-[600px] animate-fade-in-up">
+                                
+                                {/* Cabecera */}
+                                <div className="bg-gradient-to-r from-[#005eb8] to-blue-600 p-4 flex justify-between items-center text-white">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-full bg-white p-0.5 relative overflow-hidden flex-shrink-0">
+                                            <img src="https://www.forumsport.com/medias/forumsportIcon-mobile.png?context=bWFzdGVyfGltYWdlc3w5MDUzfGltYWdlL3BuZ3xhRGN3TDJnek1TOHhNVGcwTURnM056VXlOekEzTUM5bWIzSjFiWE53YjNKMFNXTnZibDl0YjJKcGJHVXVjRzVufGU3MGQxNTNmYzc0OTY3ZjQ3ZmQ1ODI1NWQ3OTk3MGI4MDYxZDc1OTUwMjJmMWI0Nzc4MmE5MGY2YmFmMTYzNGE" className="w-full h-full rounded-full object-cover" alt="Bot" />
+                                            <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
+                                        </div>
+                                        <div className="leading-tight">
+                                            <h3 className="font-bold text-sm">Agentforce</h3>
+                                            <p className="text-[10px] opacity-90 flex items-center gap-1">
+                                                <span className="bg-white/20 px-1.5 rounded">Running Expert</span>
+                                                <span>• En línea</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button onClick={() => setIsChatOpen(false)} className="text-white/80 hover:text-white w-8 h-8 flex items-center justify-center rounded-full transition hover:bg-white/10">
+                                        <i className="fa-solid fa-xmark text-lg"></i>
+                                    </button>
+                                </div>
+
+                                {/* Mensajes */}
+                                <div className="flex-1 bg-gray-50 p-4 overflow-y-auto space-y-4">
+                                    <div className="text-center text-[10px] text-gray-400 my-2">Hoy, 10:23 AM</div>
+                                    
+                                    {messages.map((msg) => (
+                                        <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                                            <div className={`max-w-[85%] p-3 rounded-2xl text-sm shadow-sm ${
+                                                msg.sender === 'user' 
+                                                    ? 'bg-[#005eb8] text-white rounded-tr-none' 
+                                                    : 'bg-white text-gray-800 border border-gray-100 rounded-tl-none'
+                                            }`}>
+                                                <div className="whitespace-pre-line leading-relaxed" dangerouslySetInnerHTML={{ 
+                                                    __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
+                                                }} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <div ref={messagesEndRef} />
+                                </div>
+
+                                {/* Input & Botones Dinámicos */}
+                                <div className="p-3 bg-white border-t border-gray-100">
+                                    
+                                    {/* SUGERENCIAS DINÁMICAS */}
+                                    <div className="flex gap-2 mb-3 overflow-x-auto pb-1 no-scrollbar">
+                                        {conversationStep === 'intro' && (
+                                            <button 
+                                                onClick={() => setInputValue("Hola, me interesan las Hoka, pero me acaban de diagnosticar principio de fascitis plantar y vengo de usar Nike. ¿Cuál me recomendáis para que no me duela?")} 
+                                                className="whitespace-nowrap text-[11px] bg-blue-50 text-[#005eb8] border border-blue-100 px-3 py-1.5 rounded-full hover:bg-blue-100 transition animate-pulse flex items-center gap-1"
+                                            >
+                                                <i className="fa-solid fa-user-doctor"></i> Consultar por Fascitis Plantar
+                                            </button>
+                                        )}
+                                        
+                                        {conversationStep === 'proposal' && (
+                                            <button 
+                                                onClick={() => setInputValue("Sí, gracias. Resérvala.")} 
+                                                className="whitespace-nowrap text-[11px] bg-green-50 text-green-700 border border-green-200 px-3 py-1.5 rounded-full hover:bg-green-100 transition font-bold flex items-center gap-1"
+                                            >
+                                                <i className="fa-solid fa-check"></i> Sí, gracias
+                                            </button>
+                                        )}
+
+                                        {conversationStep === 'confirmed' && (
+                                            <button 
+                                                className="whitespace-nowrap text-[11px] bg-gray-50 text-gray-500 border border-gray-200 px-3 py-1.5 rounded-full cursor-default"
+                                            >
+                                                Conversación finalizada
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2 border border-transparent focus-within:border-[#005eb8] focus-within:bg-white transition">
+                                        <input 
+                                            type="text" 
+                                            value={inputValue}
+                                            onChange={(e) => setInputValue(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                                            placeholder="Escribe tu mensaje..." 
+                                            className="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400"
+                                            disabled={conversationStep === 'confirmed'}
+                                        />
+                                        <div className="flex items-center gap-3 text-gray-400">
+                                            <i className="fa-solid fa-paperclip cursor-pointer hover:text-gray-600"></i>
+                                            <button 
+                                                onClick={handleSendMessage}
+                                                className={`p-1.5 w-8 h-8 rounded-full flex items-center justify-center transition ${inputValue.trim() ? 'bg-[#005eb8] text-white' : 'bg-gray-300 text-white cursor-default'}`}
+                                                disabled={conversationStep === 'confirmed'}
+                                            >
+                                                <i className="fa-solid fa-paper-plane text-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="text-center mt-2">
+                                        <p className="text-[9px] text-gray-400 flex items-center justify-center gap-1">
+                                            Powered by <span className="font-bold text-gray-500">Salesforce Agentforce</span> <i className="fa-solid fa-cloud"></i>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        )}
+                    </div>
+
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<WebAgentforceDemo />);
+    </script>
+</body>
+</html>

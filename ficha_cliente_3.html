@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Cloud - Álex (Forum Sport)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* TIPOGRAFÍA UNIFICADA */
+        body { font-family: 'Roboto', sans-serif; background-color: #f3f4f6; overflow: hidden; color: #181818; }
+        
+        /* Header Salesforce */
+        .sf-header { background-color: #ffffff; border-bottom: 1px solid #dddbda; height: 50px; }
+        .sf-nav-item { font-size: 13px; font-weight: 600; color: #181818; padding: 0 12px; cursor: pointer; }
+        
+        /* Sidebar */
+        .profile-sidebar { background-color: #0a1f38; color: white; height: calc(100vh - 50px); overflow-y: auto; }
+        .sidebar-divider { border-bottom: 1px solid #2a3b55; margin: 16px 0; }
+        .sidebar-label { font-size: 11px; color: #aeb9c6; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .sidebar-value { font-size: 13px; color: #ffffff; font-weight: 400; }
+        
+        /* Cards & Contenido */
+        .sf-card { background: white; border: 1px solid #dddbda; border-radius: 8px; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.05); margin-bottom: 16px; }
+        .sf-card-header { padding: 12px 16px; border-bottom: 1px solid #dddbda; background-color: #f8f9fa; border-radius: 8px 8px 0 0; display: flex; justify-content: space-between; align-items: center; }
+        .sf-card-title { font-size: 14px; font-weight: 700; color: #080707; display: flex; align-items: center; gap: 8px; }
+        
+        /* Tablas */
+        .sf-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #5c5c5c; font-weight: 700; padding: 8px 16px; background: #fafaf9; border-bottom: 1px solid #dddbda; text-align: left; }
+        .sf-table td { font-size: 13px; color: #181818; padding: 10px 16px; border-bottom: 1px solid #eee; }
+        
+        /* Tabs */
+        .tab-link { padding: 12px 16px; font-size: 13px; font-weight: 500; color: #444; border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+        .tab-link:hover { color: #0176d3; }
+        .tab-link.active { color: #0176d3; border-bottom-color: #0176d3; font-weight: 700; }
+        
+        /* Utilidades */
+        .field-label { font-size: 12px; color: #5c5c5c; margin-bottom: 2px; }
+        .field-value { font-size: 14px; color: #080707; border-bottom: 1px dotted #ccc; padding-bottom: 2px; }
+        
+        /* Scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+        
+        /* Visibility Classes */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Gráficos Sidebar */
+        .propensity-bar { height: 6px; background: #455a74; border-radius: 3px; position: relative; margin-top: 8px; }
+        .propensity-fill { height: 100%; background: #ffffff; border-radius: 3px; width: 90%; }
+        .propensity-dot { position: absolute; right: 10%; top: -3px; width: 12px; height: 12px; background: #ffffff; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .behavior-tag { background-color: #ffffff; color: #0a1f38; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; display: inline-block; margin-right: 6px; margin-top: 4px; }
+        .gauge-container { position: relative; width: 90px; height: 45px; margin: 10px 0; }
+        .gauge-bg { fill: none; stroke: #455a74; stroke-width: 8; }
+        .gauge-fill { fill: none; stroke: #ffffff; stroke-width: 8; stroke-dasharray: 100 100; stroke-dashoffset: 0; stroke-linecap: round; }
+        
+        /* Timeline */
+        .timeline-item { position: relative; padding-left: 24px; padding-bottom: 24px; border-left: 2px solid #e5e7eb; margin-left: 10px; }
+        .timeline-icon { position: absolute; left: -11px; top: 0; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; z-index: 10; }
+        
+    </style>
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('active'));
+            const content = document.getElementById(tabId);
+            if (content) content.classList.add('active');
+            const link = document.getElementById('link-' + tabId);
+            if (link) link.classList.add('active');
+        }
+    </script>
+</head>
+<body>
+
+    <!-- SALESFORCE DATA CLOUD HEADER -->
+    <header class="sf-header flex items-center justify-between px-4">
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="grid grid-cols-3 gap-0.5 w-5 h-5">
+                    <div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div>
+                    <div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div>
+                    <div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div>
+                </div>
+                <span class="font-bold text-lg text-gray-700">Data Cloud</span>
+            </div>
+            <nav class="hidden md:flex gap-1">
+                <span class="sf-nav-item">Home</span>
+                <span class="sf-nav-item">Einstein</span>
+                <span class="sf-nav-item">Data Streams</span>
+                <span class="sf-nav-item">Segments</span>
+                <span class="sf-nav-item">Identity Resolution</span>
+            </nav>
+        </div>
+        
+        <!-- Search & User -->
+        <div class="flex items-center gap-4">
+            <div class="relative w-64 hidden md:block">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+                <input type="text" value="Álex Martínez" class="w-full bg-white border border-gray-300 rounded pl-9 pr-3 py-1.5 text-sm focus:outline-none focus:border-blue-500 font-normal">
+            </div>
+            <div class="flex gap-3 text-gray-500 text-lg">
+                <i class="fa-regular fa-star cursor-pointer"></i>
+                <i class="fa-solid fa-circle-question cursor-pointer"></i>
+                <i class="fa-solid fa-gear cursor-pointer"></i>
+                <i class="fa-regular fa-bell cursor-pointer"></i>
+            </div>
+            <img src="https://ui-avatars.com/api/?name=Admin+User&background=005eb8&color=fff" class="w-8 h-8 rounded-full border border-gray-200">
+        </div>
+    </header>
+
+    <!-- MAIN LAYOUT -->
+    <div class="flex h-[calc(100vh-50px)]">
+        
+        <!-- LEFT SIDEBAR -->
+        <aside class="profile-sidebar w-[300px] p-5 flex-shrink-0 flex flex-col font-sans">
+            <!-- Profile Header -->
+            <div class="flex items-center gap-4 mb-2">
+                <img src="https://images.unsplash.com/photo-1590086782957-93c06ef21604?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Álex" class="w-12 h-12 rounded-full border-2 border-white/20 object-cover">
+                <div>
+                    <h1 class="text-lg font-bold text-white leading-tight">Álex Martínez</h1>
+                    <p class="text-gray-400 text-xs font-light">Gijón, Asturias</p>
+                </div>
+            </div>
+            <div class="sidebar-divider"></div>
+            
+            <!-- Contact Info -->
+            <div class="space-y-3">
+                <div><p class="sidebar-label">Customer ID</p><p class="sidebar-value">FS-8821092</p></div>
+                <div><p class="sidebar-label">Email</p><p class="sidebar-value truncate" title="alex.martinez@gmail.com">alex.martinez@gmail.com</p></div>
+                <div><p class="sidebar-label">Phone</p><p class="sidebar-value">+34 600 123 456</p></div>
+            </div>
+            <div class="sidebar-divider"></div>
+            
+            <!-- Purchase Behavior -->
+            <div>
+                <p class="sidebar-label mb-1">Purchase Behavior</p>
+                <div><span class="behavior-tag">Skiing</span><span class="behavior-tag">Running</span></div>
+            </div>
+            <div class="sidebar-divider"></div>
+            
+            <!-- Segments -->
+            <div class="space-y-3">
+                <div><p class="sidebar-label">Segment</p><p class="sidebar-value"><i class="fa-solid fa-chart-pie text-gray-400 mr-1 text-[10px]"></i> Circular Economy User</p></div>
+                <div><p class="sidebar-label">Health Segment</p><p class="sidebar-value"><i class="fa-solid fa-heart-pulse text-red-400 mr-1 text-[10px]"></i> Fascitis Recovery</p></div>
+            </div>
+            <div class="sidebar-divider"></div>
+            
+            <!-- Household -->
+            <div><p class="sidebar-label">Household</p><p class="sidebar-value">Individual</p></div>
+            <div class="sidebar-divider"></div>
+            
+            <!-- Propensity -->
+            <div>
+                <div class="flex justify-between items-end mb-1">
+                    <p class="sidebar-label mb-0">Propensity to Purchase</p>
+                    <span class="text-white text-xs font-bold">High</span>
+                </div>
+                <div class="propensity-bar"><div class="propensity-fill"></div><div class="propensity-dot"></div></div>
+            </div>
+            <div class="sidebar-divider"></div>
+            
+            <!-- LTV -->
+            <div><p class="sidebar-label">Lifetime Products</p><p class="sidebar-value font-bold">4</p></div>
+            <div class="sidebar-divider"></div>
+            
+            <!-- Engagement -->
+            <div>
+                <div class="flex justify-between items-end mb-1">
+                    <p class="sidebar-label mb-0">Engagement Score</p>
+                    <span class="text-white text-xs font-bold">94%</span>
+                </div>
+                <div class="flex items-end gap-3">
+                    <div class="gauge-container">
+                        <svg viewBox="0 0 100 50" class="w-full h-full"><path d="M10 50 A 40 40 0 0 1 90 50" class="gauge-bg" /><path d="M10 50 A 40 40 0 0 1 90 50" class="gauge-fill" stroke-dasharray="125 125" stroke-dashoffset="10" /></svg>
+                    </div>
+                    <div class="pb-1"><p class="text-white text-xs font-bold leading-tight">Highly Engaged</p></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CENTER CONTENT: DATA VIEWS -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-white relative">
+            
+            <!-- TABS -->
+            <div class="bg-white rounded-t-lg border-b border-gray-200 flex px-2 mb-4 overflow-x-auto">
+                <div id="link-tab-related" class="tab-link active" onclick="switchTab('tab-related')">Related</div>
+                <div id="link-tab-details" class="tab-link" onclick="switchTab('tab-details')">Details</div>
+                <div id="link-tab-loyalty" class="tab-link" onclick="switchTab('tab-loyalty')">Loyalty</div>
+                <div id="link-tab-unified" class="tab-link" onclick="switchTab('tab-unified')">Health</div>
+                <div id="link-tab-history" class="tab-link" onclick="switchTab('tab-history')">Agentforce History</div>
+                <div id="link-tab-activity" class="tab-link" onclick="switchTab('tab-activity')">Activity Feed</div>
+            </div>
+
+            <!-- TAB 1: RELATED -->
+            <div id="tab-related" class="tab-content active space-y-6">
+                <!-- RECENT ORDERS -->
+                <div class="sf-card">
+                    <div class="sf-card-header">
+                        <span class="sf-card-title"><i class="fa-solid fa-bag-shopping text-gray-500"></i> Recent Orders & Rentals (4)</span>
+                        <i class="fa-solid fa-chevron-down text-gray-400 cursor-pointer text-xs"></i>
+                    </div>
+                    <table class="w-full text-left sf-table">
+                        <thead><tr><th>Item / Servicio</th><th>Tipo</th><th>Estado</th><th>Fecha</th></tr></thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50"><td class="font-medium">Pack Esquí Alpino (Sierra Nevada)</td><td><span class="bg-green-100 text-green-800 px-2 py-0.5 rounded text-[11px] font-bold border border-green-200">RENTING</span></td><td class="text-gray-500 text-[13px]">Finalizado</td><td class="text-gray-500 text-[13px]">Hace 2 días</td></tr>
+                            <tr class="hover:bg-gray-50"><td class="font-medium">Sustitución Botas (Incidencia)</td><td><span class="bg-orange-100 text-orange-800 px-2 py-0.5 rounded text-[11px] font-bold border border-orange-200">GARANTÍA</span></td><td class="text-green-600 font-bold text-[13px]">Resuelto</td><td class="text-gray-500 text-[13px]">Hace 2 días</td></tr>
+                            <tr class="hover:bg-gray-50"><td class="font-medium">Nike Air Zoom Pegasus 40</td><td><span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded text-[11px] font-bold border border-blue-100">COMPRA</span></td><td class="text-gray-500 text-[13px]">Entregado</td><td class="text-gray-500 text-[13px]">Hace 1 año</td></tr>
+                            <tr class="hover:bg-gray-50"><td class="font-medium">Kit Running (Camiseta + Mallas)</td><td><span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded text-[11px] font-bold border border-blue-100">COMPRA</span></td><td class="text-gray-500 text-[13px]">Entregado</td><td class="text-gray-500 text-[13px]">Hace 1 año</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="p-3 text-center border-t border-gray-100"><a href="#" class="text-xs font-bold text-[#005eb8] hover:underline">View All Orders</a></div>
+                </div>
+
+                <!-- RECOMMENDATIONS -->
+                <div class="sf-card">
+                    <div class="sf-card-header"><span class="sf-card-title"><i class="fa-solid fa-robot text-[#005eb8]"></i> Recommendations (2)</span><i class="fa-solid fa-chevron-down text-gray-400 cursor-pointer text-xs"></i></div>
+                    <div class="p-5 flex flex-col md:flex-row gap-6">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-magnifying-glass text-orange-500 text-sm"></i><span class="text-xs font-bold text-gray-700">Campaign (1)</span></div>
+                            <div class="flex gap-3 items-start"><img src="https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&w=100&q=80" class="w-12 h-12 object-cover rounded border border-gray-200"><div><p class="text-sm font-bold text-gray-800 leading-tight mb-1">Test de Pisada</p><p class="text-[11px] text-gray-500">Today <span class="bg-blue-100 text-blue-700 px-1.5 rounded text-[9px] font-bold">SCHEDULED</span></p></div></div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-cart-shopping text-green-600 text-sm"></i><span class="text-xs font-bold text-gray-700">Products (1)</span></div>
+                            <div class="flex gap-3 items-start"><img src="https://www.forumsport.com/images/hoka-zapatilla-running-hombre-zapatilla-bondi-9-lateral-exterior-1001049502-1000x1000-f" class="w-12 h-12 object-contain rounded border border-gray-200 bg-white p-1"><div><p class="text-sm font-bold text-gray-800 leading-tight mb-1">Hoka Bondi 9</p><p class="text-[11px] text-gray-500">High Affinity Match</p></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MESSAGING SESSIONS -->
+                <div class="sf-card">
+                    <div class="sf-card-header"><span class="sf-card-title"><i class="fa-regular fa-comments text-blue-500"></i> Messaging Sessions (3)</span><i class="fa-solid fa-chevron-down text-gray-400 cursor-pointer text-xs"></i></div>
+                    <div class="p-0">
+                        <table class="w-full text-left sf-table">
+                            <thead><tr><th>Channel</th><th>Topic</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="font-medium flex items-center gap-2"><i class="fa-solid fa-envelope text-blue-500"></i> Email</td>
+                                    <td>Running Shoe Comparison</td>
+                                    <td><span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded font-bold">Resolved</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="font-medium flex items-center gap-2"><i class="fa-solid fa-laptop text-indigo-500"></i> Web Chat</td>
+                                    <td>Fascitis Inquiry</td>
+                                    <td><span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded font-bold">Resolved</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="font-medium flex items-center gap-2"><i class="fa-brands fa-whatsapp text-green-500"></i> WhatsApp</td>
+                                    <td>Ski Boot Replacement</td>
+                                    <td><span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded font-bold">Resolved</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- METRICS -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="sf-card">
+                        <div class="sf-card-header"><span class="sf-card-title">Customer Affinities</span></div>
+                        <div class="p-5 space-y-3">
+                            <div class="grid grid-cols-[80px_1fr] items-center gap-3"><span class="text-xs font-bold text-right text-[#005eb8]">Running</span><div class="bg-[#2b9bf4] h-5 rounded-r-md flex items-center px-2 text-white text-[10px] font-bold" style="width: 85%">85</div></div>
+                            <div class="grid grid-cols-[80px_1fr] items-center gap-3"><span class="text-xs font-bold text-right text-[#005eb8]">Eco</span><div class="bg-[#2b9bf4] h-5 rounded-r-md flex items-center px-2 text-white text-[10px] font-bold" style="width: 70%">70</div></div>
+                            <div class="grid grid-cols-[80px_1fr] items-center gap-3"><span class="text-xs font-bold text-right text-[#005eb8]">Skiing</span><div class="bg-[#2b9bf4] h-5 rounded-r-md flex items-center px-2 text-white text-[10px] font-bold" style="width: 45%">45</div></div>
+                        </div>
+                    </div>
+                    <div class="sf-card">
+                        <div class="sf-card-header"><span class="sf-card-title"><i class="fa-solid fa-share-nodes text-purple-500"></i> Channel Activity</span></div>
+                        <div class="p-5 space-y-4">
+                            <div><p class="text-xs font-bold text-gray-700 mb-1">Web</p><div class="w-full bg-gray-100 rounded-full h-2 flex overflow-hidden"><div class="bg-blue-500 h-full" style="width: 70%"></div><div class="bg-teal-500 h-full" style="width: 10%"></div></div></div>
+                            <div><p class="text-xs font-bold text-gray-700 mb-1">WhatsApp</p><div class="w-full bg-gray-100 rounded-full h-2 flex overflow-hidden"><div class="bg-blue-500 h-full" style="width: 40%"></div><div class="bg-purple-500 h-full" style="width: 20%"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: DETAILS -->
+            <div id="tab-details" class="tab-content space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="sf-card">
+                        <div class="sf-card-header"><span class="sf-card-title"><i class="fa-solid fa-user text-gray-500"></i> Individual</span></div>
+                        <div class="p-5 grid grid-cols-2 gap-4">
+                            <div><p class="field-label">First Name</p><p class="field-value">Álex</p></div>
+                            <div><p class="field-label">Last Name</p><p class="field-value">Martínez</p></div>
+                            <div><p class="field-label">Birth Date</p><p class="field-value">12/05/1989</p></div>
+                            <div><p class="field-label">Language</p><p class="field-value">Spanish</p></div>
+                        </div>
+                    </div>
+                    <div class="sf-card">
+                        <div class="sf-card-header"><span class="sf-card-title"><i class="fa-solid fa-address-book text-gray-500"></i> Contact Points</span></div>
+                        <div class="p-5 space-y-4">
+                            <div><p class="field-label">Email</p><p class="field-value">alex.martinez@gmail.com</p></div>
+                            <div><p class="field-label">Phone</p><p class="field-value">+34 600 123 456</p></div>
+                            <div><p class="field-label">Address</p><p class="field-value">Calle Corrida, 12, 4º B<br>33206 Gijón, Asturias</p></div>
+                        </div>
+                    </div>
+                    <div class="sf-card">
+                        <div class="sf-card-header"><span class="sf-card-title"><i class="fa-solid fa-id-card text-gray-500"></i> Party Identification</span></div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex justify-between border-b border-dashed border-gray-200 pb-1"><span class="text-sm text-gray-600">Forum Sport Club ID</span><span class="text-sm font-mono font-bold text-[#005eb8]">FS-8821092</span></div>
+                            <div class="flex justify-between border-b border-dashed border-gray-200 pb-1"><span class="text-sm text-gray-600">Newe Renting ID</span><span class="text-sm font-mono font-bold text-gray-800">NW-9982-USR</span></div>
+                            <div class="flex justify-between"><span class="text-sm text-gray-600">Salesforce CRM ID</span><span class="text-sm font-mono text-gray-500">0035g00000123AB</span></div>
+                        </div>
+                    </div>
+                    <div class="sf-card">
+                        <div class="sf-card-header"><span class="sf-card-title"><i class="fa-solid fa-check-double text-gray-500"></i> Consent & Preferences</span></div>
+                        <div class="p-5 grid grid-cols-2 gap-4">
+                            <div><p class="field-label">Email Marketing</p><p class="field-value text-green-600 font-bold">Opt-In</p></div>
+                            <div><p class="field-label">SMS / WhatsApp</p><p class="field-value text-green-600 font-bold">Opt-In</p></div>
+                            <div><p class="field-label">Data Processing</p><p class="field-value">Accepted (GDPR)</p></div>
+                            <div><p class="field-label">Third Party Sharing</p><p class="field-value text-red-500">Opt-Out</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: LOYALTY -->
+            <div id="tab-loyalty" class="tab-content space-y-6">
+                <div class="sf-card bg-gradient-to-r from-[#005eb8] to-[#004488] text-white border-none shadow-md">
+                    <div class="p-5 flex justify-between items-center">
+                        <div><p class="text-[10px] uppercase tracking-widest opacity-80 mb-1">Tier</p><h2 class="text-2xl font-bold mb-1 flex items-center gap-2">CLUB GOLD <i class="fa-solid fa-crown text-yellow-400"></i></h2></div>
+                        <div class="text-right"><p class="text-[10px] uppercase tracking-widest opacity-80 mb-1">Points</p><h2 class="text-3xl font-bold">2,450</h2></div>
+                    </div>
+                </div>
+                <div class="sf-card">
+                    <div class="sf-card-header"><span class="sf-card-title"><i class="fa-solid fa-ticket text-green-600"></i> Active Vouchers</span></div>
+                    <div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border border-dashed border-green-300 bg-green-50 rounded p-3 relative hover:bg-green-100 transition"><p class="font-bold text-green-800 text-lg">10€ DTO.</p><p class="text-[10px] text-green-600">En compras > 50€</p><div class="absolute top-2 right-2 text-green-600"><i class="fa-solid fa-euro-sign"></i></div></div>
+                        <div class="border border-dashed border-yellow-400 bg-yellow-50 rounded p-3 relative hover:bg-yellow-100 transition"><p class="font-bold text-yellow-800 text-lg">ENTRENADOR PERSONAL</p><p class="text-[10px] text-yellow-700">30 min con Dani (Running Tech)</p><div class="absolute top-2 right-2 text-yellow-600"><i class="fa-solid fa-user-clock"></i></div></div>
+                    </div>
+                </div>
+                <div class="sf-card">
+                    <div class="sf-card-header"><span class="sf-card-title"><i class="fa-solid fa-list-ul text-gray-500"></i> Points History</span></div>
+                    <table class="w-full text-left sf-table">
+                        <thead><tr><th>Description</th><th>Points</th><th>Date</th></tr></thead>
+                        <tbody>
+                            <tr><td>Purchase: Hoka Bondi 9</td><td class="text-green-600 font-bold">+170</td><td class="text-gray-500">Today</td></tr>
+                            <tr><td>Renting: Ski Pack Sierra Nevada</td><td class="text-green-600 font-bold">+90</td><td class="text-gray-500">2 days ago</td></tr>
+                            <tr><td>Challenge: "Muro San Lorenzo 5K"</td><td class="text-green-600 font-bold">+50</td><td class="text-gray-500">1 month ago</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 4: HEALTH -->
+            <div id="tab-unified" class="tab-content space-y-6">
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="sf-card p-4 text-center"><p class="text-xs text-gray-500 uppercase">Height/Weight</p><p class="font-bold text-gray-800 text-lg">180cm / 75kg</p></div>
+                    <div class="sf-card p-4 text-center border-l-4 border-l-orange-400"><p class="text-xs text-orange-600 uppercase font-bold">Condition</p><p class="font-bold text-gray-800 text-lg">Fascitis Plantar</p></div>
+                    <div class="sf-card p-4 text-center"><p class="text-xs text-gray-500 uppercase">Shoe Size</p><p class="font-bold text-gray-800 text-lg">EU 43.5</p></div>
+                </div>
+                <div class="sf-card">
+                    <div class="sf-card-header"><span class="sf-card-title"><i class="fa-solid fa-shoe-prints text-[#005eb8]"></i> Gait Analysis Results</span><span class="text-xs text-gray-500">Performed by: Mikel (FS Urban) • Today</span></div>
+                    <div class="p-0">
+                        <div class="flex flex-col md:flex-row">
+                            <!-- FOTO GAIT ANALYSIS AÑADIDA -->
+                            <div class="w-full md:w-1/3 bg-gray-50 p-4 flex flex-col items-center justify-center border-r border-gray-200">
+                                <img src="https://jcompan.github.io/jcompan-static-files/gait_analysis.jpg" alt="Mapa de Presión" class="w-full h-48 object-contain mix-blend-multiply opacity-90">
+                                <p class="text-[10px] text-gray-400 mt-2 uppercase font-bold tracking-wider">Pressure Map Visualization</p>
+                            </div>
+                            
+                            <div class="w-full md:w-2/3 p-6">
+                                <h4 class="font-bold text-gray-800 mb-4">Biomechanical Assessment</h4>
+                                <div class="grid grid-cols-2 gap-y-6 gap-x-8">
+                                    <div><p class="text-xs text-gray-500 uppercase font-semibold mb-1">Foot Strike</p><p class="text-sm font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-circle-arrow-down text-red-500 rotate-45"></i> Heavy Heel Strike</p><p class="text-xs text-gray-500 mt-1">Increases impact on fascia.</p></div>
+                                    <div><p class="text-xs text-gray-500 uppercase font-semibold mb-1">Pronation</p><p class="text-sm font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-arrows-left-right text-green-500"></i> Neutral</p><p class="text-xs text-gray-500 mt-1">No stability correction needed.</p></div>
+                                    <div class="col-span-2 bg-blue-50 p-3 rounded border border-blue-100"><p class="text-xs text-[#005eb8] font-bold uppercase mb-1">Expert Recommendation</p><p class="text-sm text-gray-700">"Customer needs <strong>Max Cushioning</strong> and <strong>High Drop (8-10mm)</strong> or <strong>Rocker Geometry</strong> to unload the Achilles/Fascia complex. Avoid minimalist shoes."</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: AGENTFORCE HISTORY -->
+            <div id="tab-history" class="tab-content space-y-4">
+                <div class="sf-card p-4 border-l-4 border-l-blue-500">
+                    <div class="flex justify-between mb-2"><span class="font-bold text-sm text-gray-800">Running Shoe Comparison</span><span class="text-xs text-gray-500">Email • Today, 12:30 PM</span></div>
+                    <p class="text-sm text-gray-600">Generated comparison table Hoka vs Asics. Customer prioritized cushioning.</p>
+                </div>
+                <div class="sf-card p-4 border-l-4 border-l-indigo-500">
+                    <div class="flex justify-between mb-2"><span class="font-bold text-sm text-gray-800">Fascitis Inquiry</span><span class="text-xs text-gray-500">Web Chat • Today, 10:23 AM</span></div>
+                    <p class="text-sm text-gray-600">Product advice for medical condition. Appointment booked with Mikel.</p>
+                </div>
+                <div class="sf-card p-4 border-l-4 border-l-green-500">
+                    <div class="flex justify-between mb-2"><span class="font-bold text-sm text-gray-800">Ski Boot Replacement</span><span class="text-xs text-gray-500">WhatsApp • 2 days ago</span></div>
+                    <p class="text-sm text-gray-600">Urgent issue resolved via Einstein Vision & Geo-location.</p>
+                </div>
+            </div>
+
+            <!-- TAB 6: ACTIVITY FEED -->
+            <div id="tab-activity" class="tab-content space-y-6">
+                <div class="sf-card p-4 flex items-center gap-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Strava_Logo.svg" class="h-5">
+                    <span class="text-sm font-bold text-gray-800">Connected</span><span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                </div>
+                <div class="sf-card">
+                    <div class="sf-card-header"><span class="sf-card-title">Recent Activities</span></div>
+                    <table class="w-full text-left sf-table">
+                        <thead><tr><th>Activity</th><th>Type</th><th>Stats</th><th>Date</th></tr></thead>
+                        <tbody>
+                            <tr><td class="font-medium">Muro de San Lorenzo 5K</td><td>Running</td><td>5.2 km</td><td class="text-gray-500">Yesterday</td></tr>
+                            <tr><td class="font-medium">Sierra Nevada - Borreguiles</td><td>Skiing</td><td>24.5 km</td><td class="text-gray-500">3 days ago</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="w-[280px] bg-white border-l border-gray-200 p-5 flex-shrink-0 flex flex-col font-sans">
+            <h3 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-bolt text-[#005eb8]"></i> Engagement Feed</h3>
+            <div class="pl-2 space-y-6 relative before:absolute before:left-0 before:top-2 before:bottom-0 before:w-0.5 before:bg-gray-200">
+                <div class="timeline-item">
+                    <div class="timeline-icon bg-blue-500"><i class="fa-solid fa-envelope"></i></div>
+                    <p class="text-xs font-bold text-[#005eb8]">Email Interaction</p>
+                    <p class="text-[11px] text-gray-600 leading-tight mt-1">Replied regarding "Fascitis".</p>
+                    <p class="text-[10px] text-gray-400 mt-1">Today</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon bg-indigo-500"><i class="fa-solid fa-globe"></i></div>
+                    <p class="text-xs font-bold text-[#005eb8]">Web Visit</p>
+                    <p class="text-[11px] text-gray-600 leading-tight mt-1">Browsed Running Category.</p>
+                    <p class="text-[10px] text-gray-400 mt-1">Today</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon bg-green-500"><i class="fa-solid fa-box-open"></i></div>
+                    <p class="text-xs font-bold text-[#005eb8]">Rental Returned</p>
+                    <p class="text-[11px] text-gray-600 leading-tight mt-1">Material checked OK.</p>
+                    <p class="text-[10px] text-gray-400 mt-1">Yesterday</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon bg-green-600"><i class="fa-brands fa-whatsapp"></i></div>
+                    <p class="text-xs font-bold text-[#005eb8]">Service Case Resolved</p>
+                    <p class="text-[11px] text-gray-600 leading-tight mt-1">Botas Ski Broken.</p>
+                    <p class="text-[10px] text-gray-400 mt-1">2 days ago</p>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+</body>
+</html>

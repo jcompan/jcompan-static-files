@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Cloud - Álex (Forum Sport)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Salesforce+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #f3f4f6; overflow: hidden; }
+        
+        /* Salesforce Header Style */
+        .sf-header { background-color: #ffffff; border-bottom: 1px solid #dddbda; height: 50px; }
+        .sf-nav-item { font-size: 13px; font-weight: 600; color: #181818; padding: 0 12px; cursor: pointer; }
+        .sf-nav-item:hover { color: #0176d3; }
+        
+        /* Left Sidebar (Profile) */
+        .profile-sidebar { background-color: #0a1f38; color: white; height: calc(100vh - 50px); overflow-y: auto; font-family: 'Roboto', sans-serif; }
+        .sidebar-divider { border-bottom: 1px solid #2a3b55; margin: 16px 0; }
+        
+        /* Progress Bars */
+        .propensity-bar { height: 6px; background: #455a74; border-radius: 3px; position: relative; margin-top: 8px; }
+        .propensity-fill { height: 100%; background: #ffffff; border-radius: 3px; width: 90%; }
+        .propensity-dot { position: absolute; right: 10%; top: -3px; width: 12px; height: 12px; background: #ffffff; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        /* Tags */
+        .behavior-tag { background-color: #ffffff; color: #0a1f38; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; display: inline-block; margin-right: 6px; margin-top: 6px; }
+        
+        /* Gauge Chart */
+        .gauge-container { position: relative; width: 100px; height: 50px; margin: 10px 0; }
+        .gauge-bg { fill: none; stroke: #455a74; stroke-width: 8; }
+        .gauge-fill { fill: none; stroke: #ffffff; stroke-width: 8; stroke-dasharray: 100 100; stroke-dashoffset: 0; stroke-linecap: round; }
+        
+        /* Tabs */
+        .tab-link { padding: 12px 16px; font-size: 13px; font-weight: 600; color: #444; border-bottom: 2px solid transparent; cursor: pointer; }
+        .tab-link.active { color: #0176d3; border-bottom: 2px solid #0176d3; }
+        
+        /* Cards */
+        .sf-card { background: white; border: 1px solid #dddbda; border-radius: 8px; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.05); margin-bottom: 16px; }
+        .sf-card-header { padding: 16px 20px; border-bottom: 1px solid #dddbda; font-weight: 700; font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Timeline */
+        .timeline-item { position: relative; padding-left: 24px; padding-bottom: 24px; border-left: 2px solid #e5e7eb; margin-left: 10px; }
+        .timeline-icon { position: absolute; left: -11px; top: 0; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; z-index: 10; }
+        
+        /* Scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <!-- SALESFORCE DATA CLOUD HEADER -->
+    <header class="sf-header flex items-center justify-between px-4">
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="grid grid-cols-3 gap-0.5 w-5 h-5">
+                    <div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div>
+                    <div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div>
+                    <div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div><div class="bg-blue-600 rounded-full"></div>
+                </div>
+                <span class="font-bold text-lg text-gray-700">Data Cloud</span>
+            </div>
+            <nav class="hidden md:flex">
+                <span class="sf-nav-item">Home</span>
+                <span class="sf-nav-item">Einstein</span>
+                <span class="sf-nav-item">Data Streams</span>
+                <span class="sf-nav-item">Segments</span>
+                <span class="sf-nav-item">Identity Resolution</span>
+            </nav>
+        </div>
+        
+        <!-- Search & User -->
+        <div class="flex items-center gap-4">
+            <div class="relative w-64 hidden md:block">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+                <input type="text" value="Álex Martínez" class="w-full bg-white border border-gray-300 rounded pl-9 pr-3 py-1.5 text-sm focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="flex gap-3 text-gray-500 text-lg">
+                <i class="fa-regular fa-star cursor-pointer"></i>
+                <i class="fa-solid fa-circle-question cursor-pointer"></i>
+                <i class="fa-solid fa-gear cursor-pointer"></i>
+                <i class="fa-regular fa-bell cursor-pointer"></i>
+            </div>
+            <img src="https://ui-avatars.com/api/?name=Admin+User&background=005eb8&color=fff" class="w-8 h-8 rounded-full border border-gray-200">
+        </div>
+    </header>
+
+    <!-- MAIN LAYOUT -->
+    <div class="flex h-[calc(100vh-50px)]">
+        
+        <!-- LEFT SIDEBAR: PROFILE SUMMARY -->
+        <aside class="profile-sidebar w-[320px] p-6 flex-shrink-0 flex flex-col">
+            
+            <!-- 1. Profile Header -->
+            <div class="flex items-center gap-4 mb-2">
+                <img src="https://images.unsplash.com/photo-1590086782957-93c06ef21604?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Álex" class="w-14 h-14 rounded-full border-2 border-white/20 object-cover">
+                <div>
+                    <h1 class="text-xl font-bold text-white leading-tight">Álex Martínez</h1>
+                    <p class="text-gray-400 text-sm font-light">Gijón, Asturias</p>
+                </div>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- 2. Contact Info (RESTAURADO) -->
+            <div class="space-y-3 text-[13px] font-light">
+                <div class="flex items-center gap-3">
+                    <i class="fa-regular fa-id-card text-white w-4"></i>
+                    <span class="text-gray-300">Customer ID <strong class="text-white ml-1">FS-8821092</strong></span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i class="fa-regular fa-envelope text-white w-4"></i>
+                    <span class="text-gray-300">Primary Email <strong class="text-white ml-1">alex.martinez@gmail.com</strong></span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-phone text-white w-4"></i>
+                    <span class="text-gray-300">Primary Phone <strong class="text-white ml-1">+34 600 123 456</strong></span>
+                </div>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- 3. Purchase Behavior -->
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fa-solid fa-bag-shopping text-white w-4"></i>
+                    <span class="text-gray-300 text-[13px]">Purchase Behavior:</span>
+                </div>
+                <div class="pl-7">
+                    <span class="behavior-tag">Skiing</span>
+                    <span class="behavior-tag">Running</span>
+                </div>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- 4. Segment -->
+            <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-chart-pie text-white w-4 mt-1"></i>
+                    <div class="text-[13px]">
+                        <span class="text-gray-300">Segment</span> <strong class="text-white ml-1">Circular Economy User</strong>
+                    </div>
+                </div>
+                <!-- Segmento de Salud -->
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-heart-pulse text-red-400 w-4 mt-1"></i>
+                    <div class="text-[13px]">
+                        <span class="text-gray-300">Health Segment</span> <strong class="text-white ml-1">Fascitis Plantar Recovery</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- 5. Household -->
+            <div class="flex items-start gap-3">
+                <i class="fa-solid fa-house text-white w-4 mt-1"></i>
+                <div class="text-[13px]">
+                    <span class="text-gray-300">Household:</span> <strong class="text-white ml-1">Individual</strong>
+                </div>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- 6. Propensity to Purchase -->
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <i class="fa-solid fa-cart-shopping text-white w-4"></i>
+                    <div class="text-[13px]">
+                        <span class="text-gray-300">Propensity to Purchase:</span> <strong class="text-white ml-1">Highly Likely</strong>
+                    </div>
+                </div>
+                <div class="pl-7">
+                    <div class="propensity-bar">
+                        <div class="propensity-fill"></div>
+                        <div class="propensity-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- 7. Lifetime Products -->
+            <div class="flex items-start gap-3">
+                <i class="fa-solid fa-box text-white w-4 mt-1"></i>
+                <div class="text-[13px]">
+                    <span class="text-gray-300">Lifetime Products Purchased</span> <strong class="text-white ml-1">4</strong>
+                </div>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- 8. Engagement Score -->
+            <div>
+                <div class="flex items-center gap-3 mb-1">
+                    <i class="fa-solid fa-gauge-high text-white w-4"></i>
+                    <div class="text-[13px]">
+                        <span class="text-gray-300">Engagement Score</span> <strong class="text-white ml-1">94%</strong>
+                    </div>
+                </div>
+                <div class="pl-7 flex items-end gap-3">
+                    <div class="gauge-container">
+                        <svg viewBox="0 0 100 50" class="w-full h-full">
+                            <path d="M10 50 A 40 40 0 0 1 90 50" class="gauge-bg" />
+                            <path d="M10 50 A 40 40 0 0 1 90 50" class="gauge-fill" stroke-dasharray="125 125" stroke-dashoffset="10" />
+                        </svg>
+                    </div>
+                    <div class="pb-2">
+                        <p class="text-white text-sm font-bold leading-tight">Highly Engaged</p>
+                        <p class="text-[10px] text-gray-400 leading-tight">Compared to 12K similar audience</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- 9. Profile Data Footer -->
+            <div class="mt-auto pt-2">
+                <div class="flex items-center gap-2 text-sm text-gray-300 mb-2">
+                    <span>Profile Data:</span>
+                    <div class="flex gap-3 text-white ml-2">
+                        <i class="fa-solid fa-magnifying-glass cursor-pointer hover:text-blue-400"></i>
+                        <i class="fa-solid fa-cart-shopping cursor-pointer hover:text-blue-400"></i>
+                        <i class="fa-solid fa-snowflake cursor-pointer hover:text-blue-400"></i>
+                        <i class="fa-regular fa-heart cursor-pointer hover:text-blue-400"></i>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- CENTER CONTENT: DATA VIEWS -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-6">
+            
+            <!-- TABS -->
+            <div class="bg-white rounded-t-lg border-b border-gray-200 flex px-2 mb-4">
+                <div class="tab-link active">Related</div>
+                <div class="tab-link">Details</div>
+                <div class="tab-link">Unified Health</div>
+                <div class="tab-link">Live Chat History</div>
+            </div>
+
+            <!-- RECENT ORDERS & RENTALS CARD -->
+            <div class="sf-card">
+                <div class="sf-card-header">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-bag-shopping text-gray-500"></i> Recent Orders & Rentals (4)</span>
+                    <i class="fa-solid fa-chevron-down text-gray-400 cursor-pointer"></i>
+                </div>
+                <div class="p-0">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-gray-50 border-b border-gray-100 text-xs uppercase text-gray-500">
+                            <tr>
+                                <th class="px-5 py-3 font-semibold">Item / Servicio</th>
+                                <th class="px-5 py-3 font-semibold">Tipo</th>
+                                <th class="px-5 py-3 font-semibold">Estado</th>
+                                <th class="px-5 py-3 font-semibold">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-3 font-medium text-gray-800">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center text-gray-500"><i class="fa-solid fa-person-skiing"></i></div>
+                                        <span>Pack Esquí Alpino (Sierra Nevada)</span>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-3"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-bold border border-green-200">RENTING (Newe)</span></td>
+                                <td class="px-5 py-3 text-gray-500">Finalizado</td>
+                                <td class="px-5 py-3 text-gray-500">Hace 2 días</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-3 font-medium text-gray-800">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center text-gray-500"><i class="fa-solid fa-rotate"></i></div>
+                                        <span>Sustitución Botas (Incidencia)</span>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-3"><span class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded text-xs font-bold border border-orange-200">Garantía</span></td>
+                                <td class="px-5 py-3 text-green-600 font-bold">Resuelto</td>
+                                <td class="px-5 py-3 text-gray-500">Hace 2 días</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-3 font-medium text-gray-800">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center text-gray-500"><i class="fa-solid fa-shoe-prints"></i></div>
+                                        <span>Nike Air Zoom Pegasus 40</span>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-3"><span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded text-xs border border-blue-100">Compra</span></td>
+                                <td class="px-5 py-3 text-gray-500">Entregado</td>
+                                <td class="px-5 py-3 text-gray-500">Hace 1 año</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-5 py-3 font-medium text-gray-800">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center text-gray-500"><i class="fa-solid fa-shirt"></i></div>
+                                        <span>Kit Running (Camiseta + Mallas)</span>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-3"><span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded text-xs border border-blue-100">Compra</span></td>
+                                <td class="px-5 py-3 text-gray-500">Entregado</td>
+                                <td class="px-5 py-3 text-gray-500">Hace 1 año</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="p-3 text-center border-t border-gray-100">
+                        <a href="#" class="text-xs font-bold text-[#005eb8] hover:underline">View All Orders</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RECOMMENDATIONS CARD -->
+            <div class="sf-card">
+                <div class="sf-card-header">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-robot text-[#005eb8]"></i> Recommendations (2)</span>
+                    <i class="fa-solid fa-chevron-down text-gray-400 cursor-pointer"></i>
+                </div>
+                <div class="p-5">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        
+                        <!-- Recommendation 1: Campaign (UPDATED) -->
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-3">
+                                <i class="fa-solid fa-magnifying-glass text-orange-500 text-sm"></i>
+                                <span class="text-xs font-bold text-gray-700">Campaign Recommendation (1)</span>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <!-- Imagen actualizada: Análisis de pisada / Running -->
+                                <img src="https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&w=100&q=80" alt="Foot Test" class="w-16 h-16 object-cover rounded border border-gray-200">
+                                <div>
+                                    <p class="text-sm font-bold text-gray-800 leading-tight mb-1">Test de Pisada (Gait Analysis)</p>
+                                    <p class="text-[11px] text-gray-500">Today <span class="bg-blue-100 text-blue-700 px-1.5 rounded text-[9px] font-bold ml-1">SCHEDULED</span></p>
+                                    <p class="text-[10px] text-gray-400 mt-0.5">Assigned to: Mikel (FS Urban)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recommendation 2: Products -->
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-3">
+                                <i class="fa-solid fa-cart-shopping text-green-600 text-sm"></i>
+                                <span class="text-xs font-bold text-gray-700">Products Recommendation (1)</span>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <img src="https://www.forumsport.com/images/hoka-zapatilla-running-hombre-zapatilla-bondi-9-lateral-exterior-1001049502-1000x1000-f" alt="Hoka Bondi 9" class="w-16 h-16 object-contain rounded border border-gray-200 bg-white p-1">
+                                <div>
+                                    <p class="text-sm font-bold text-gray-800 leading-tight mb-1">Hoka Bondi 9 (Running)</p>
+                                    <p class="text-[11px] text-gray-500">Today, <span class="text-[#005eb8] font-semibold">High Affinity Match</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="mt-5 pt-3 border-t border-gray-100 text-center">
+                        <a href="#" class="text-xs font-bold text-[#005eb8] hover:underline">View All</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MESSAGING SESSIONS CARD -->
+            <div class="sf-card">
+                <div class="sf-card-header">
+                    <span class="flex items-center gap-2"><i class="fa-regular fa-comments text-blue-500"></i> Messaging Sessions (3)</span>
+                    <i class="fa-solid fa-chevron-down text-gray-400 cursor-pointer"></i>
+                </div>
+                <div class="p-5 space-y-6">
+                    
+                    <!-- Session 1: Email (Comparativa) -->
+                    <div class="flex justify-between items-start border-b border-gray-100 pb-4">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <i class="fa-solid fa-envelope text-blue-500"></i>
+                                <p class="text-sm font-bold text-[#005eb8]">MS-0000003</p>
+                            </div>
+                            <div class="grid grid-cols-[140px_1fr] gap-y-1 text-sm">
+                                <span class="text-gray-500">Channel:</span>
+                                <span class="text-gray-800">Email (Gmail)</span>
+                                <span class="text-gray-500">Topic:</span>
+                                <span class="text-gray-800">Running Shoe Comparison</span>
+                            </div>
+                        </div>
+                        <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">Resolved</span>
+                    </div>
+
+                    <!-- Session 2: Web Chat (Consulta Running) -->
+                    <div class="flex justify-between items-start border-b border-gray-100 pb-4">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <i class="fa-solid fa-laptop text-indigo-500"></i>
+                                <p class="text-sm font-bold text-[#005eb8]">MS-0000002</p>
+                            </div>
+                            <div class="grid grid-cols-[140px_1fr] gap-y-1 text-sm">
+                                <span class="text-gray-500">Channel:</span>
+                                <span class="text-gray-800">Web Chat</span>
+                                <span class="text-gray-500">Topic:</span>
+                                <span class="text-gray-800">Fascitis Inquiry</span>
+                            </div>
+                        </div>
+                        <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">Resolved</span>
+                    </div>
+
+                    <!-- Session 3: WhatsApp (Incidencia Esquí) -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <i class="fa-brands fa-whatsapp text-green-500"></i>
+                                <p class="text-sm font-bold text-[#005eb8]">MS-0000001</p>
+                            </div>
+                            <div class="grid grid-cols-[140px_1fr] gap-y-1 text-sm">
+                                <span class="text-gray-500">Channel:</span>
+                                <span class="text-gray-800">WhatsApp Business</span>
+                                <span class="text-gray-500">Topic:</span>
+                                <span class="text-gray-800">Ski Boot Replacement</span>
+                            </div>
+                        </div>
+                        <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">Resolved</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                
+                <!-- CUSTOMER AFFINITIES -->
+                <div class="sf-card">
+                    <div class="sf-card-header">
+                        <span>Customer Affinities</span>
+                        <div class="flex gap-4 text-sm text-gray-500 font-normal">
+                            <span class="text-black font-bold border-b-2 border-black pb-3 -mb-3">Insights</span>
+                            <span>Details</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between mb-4">
+                            <div class="flex items-center gap-2 text-sm text-gray-600">
+                                <span>Showing Top in:</span>
+                                <select class="border border-gray-300 rounded px-2 py-1 text-sm text-black"><option>Category</option></select>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-600">
+                                <span>By:</span>
+                                <select class="border border-gray-300 rounded px-2 py-1 text-sm text-black"><option>View Time</option></select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-[100px_1fr] items-center gap-4">
+                                <span class="text-sm font-semibold text-right text-[#005eb8]">Running</span>
+                                <div class="bg-[#2b9bf4] h-6 rounded-r-md flex items-center px-2 text-white text-xs font-bold" style="width: 85%">85</div>
+                            </div>
+                            <div class="grid grid-cols-[100px_1fr] items-center gap-4">
+                                <span class="text-sm font-semibold text-right text-[#005eb8]">Sustainability</span>
+                                <div class="bg-[#2b9bf4] h-6 rounded-r-md flex items-center px-2 text-white text-xs font-bold" style="width: 70%">70</div>
+                            </div>
+                            <div class="grid grid-cols-[100px_1fr] items-center gap-4">
+                                <span class="text-sm font-semibold text-right text-[#005eb8]">Skiing</span>
+                                <div class="bg-[#2b9bf4] h-6 rounded-r-md flex items-center px-2 text-white text-xs font-bold" style="width: 45%">45</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTIVITY BY CHANNEL -->
+                <div class="sf-card">
+                    <div class="sf-card-header">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-share-nodes text-purple-500"></i> Activity by Channel</span>
+                        <div class="flex gap-3 text-[10px]">
+                            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-teal-500"></span> Purchases</span>
+                            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Engagement</span>
+                            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-500"></span> Outreach</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <p class="text-sm font-bold text-gray-700 mb-2">Forum Sport Website</p>
+                            <div class="w-full bg-gray-100 rounded-full h-3 flex overflow-hidden">
+                                <div class="bg-blue-500 h-full" style="width: 70%"></div>
+                                <div class="bg-teal-500 h-full" style="width: 10%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-gray-700 mb-2">WhatsApp</p>
+                            <div class="w-full bg-gray-100 rounded-full h-3 flex overflow-hidden">
+                                <div class="bg-blue-500 h-full" style="width: 40%"></div>
+                                <div class="bg-purple-500 h-full" style="width: 20%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- RIGHT SIDEBAR: ENGAGEMENT FEED -->
+        <aside class="w-[300px] bg-white border-l border-gray-200 p-4 flex-shrink-0 hidden xl:block overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-bold text-gray-800 text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-[#005eb8]"></i> Engagement
+                </h3>
+                <i class="fa-solid fa-circle-chevron-down text-gray-400"></i>
+            </div>
+            
+            <div class="pl-2">
+                
+                <!-- NEW: Email Interaction -->
+                <div class="timeline-item">
+                    <div class="timeline-icon bg-blue-500"><i class="fa-solid fa-envelope"></i></div>
+                    <p class="text-sm font-bold text-[#005eb8]">Email Interaction</p>
+                    <p class="text-xs text-gray-600 mt-0.5">Replied to Agentforce regarding "Fascitis" & Shoe Comparison.</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Today</p>
+                </div>
+
+                <!-- NEW: Web Behavior -->
+                <div class="timeline-item">
+                    <div class="timeline-icon bg-indigo-500"><i class="fa-solid fa-globe"></i></div>
+                    <p class="text-sm font-bold text-[#005eb8]">Web Visit</p>
+                    <p class="text-xs text-gray-600 mt-0.5">Browsed Running Category. Viewed Hoka Bondi 9 & Asics Nimbus.</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Today</p>
+                </div>
+
+                <!-- Event 1: Rental Return -->
+                <div class="timeline-item">
+                    <div class="timeline-icon bg-green-500"><i class="fa-solid fa-box-open"></i></div>
+                    <p class="text-sm font-bold text-[#005eb8]">Rental Returned</p>
+                    <p class="text-xs text-gray-600 mt-0.5">Material checked at FS Urban. Status: OK.</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Yesterday</p>
+                </div>
+
+                <!-- Event 2: WhatsApp -->
+                <div class="timeline-item">
+                    <div class="timeline-icon bg-green-600"><i class="fa-brands fa-whatsapp"></i></div>
+                    <p class="text-sm font-bold text-[#005eb8]">Service Case Resolved</p>
+                    <p class="text-xs text-gray-600 mt-0.5">Botas Ski Broken. Agentforce orchestrated replacement.</p>
+                    <p class="text-[11px] text-gray-400 mt-1">2 days ago</p>
+                </div>
+
+                <!-- Event 3: Rental Start -->
+                <div class="timeline-item">
+                    <div class="timeline-icon bg-orange-500"><i class="fa-solid fa-person-skiing"></i></div>
+                    <p class="text-sm font-bold text-[#005eb8]">Newe Rental Started</p>
+                    <p class="text-xs text-gray-600 mt-0.5">Weekend Ski Pack (Intermediate).</p>
+                    <p class="text-[11px] text-gray-400 mt-1">4 days ago</p>
+                </div>
+
+                <!-- Event 4: Web Booking -->
+                <div class="timeline-item border-l-transparent">
+                    <div class="timeline-icon bg-indigo-500"><i class="fa-solid fa-laptop"></i></div>
+                    <p class="text-sm font-bold text-[#005eb8]">Web Booking</p>
+                    <p class="text-xs text-gray-600 mt-0.5">Completed rental booking via App.</p>
+                    <p class="text-[11px] text-gray-400 mt-1">5 days ago</p>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+</body>
+</html>

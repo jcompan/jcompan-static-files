@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu pedido de Forum Sport está listo</title>
+<!-- Importamos Montserrat -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style type="text/css">
+    /* Resets */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; display: block; }
+    table { border-collapse: collapse !important; }
+    
+    /* Estilos Generales */
+    body {
+        margin: 0; padding: 0;
+        background-color: #f4f4f4;
+        font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+        color: #333333;
+    }
+    .email-wrapper {
+        width: 100%;
+        background-color: #f4f4f4;
+        padding: 20px 0;
+    }
+    .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        border-radius: 4px;
+    }
+    
+    /* Header */
+    .header-container {
+        padding: 25px 0;
+        text-align: center;
+        background-color: #ffffff;
+        border-bottom: 4px solid #005eb8; /* Azul Forum */
+    }
+
+    /* Hero Section Wrapper para superposición */
+    .hero-wrapper {
+        position: relative;
+        width: 100%;
+        display: block;
+    }
+    
+    .hero-image {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Overlay QR */
+    .qr-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        width: 220px;
+        border: 1px solid #e0e0e0;
+    }
+
+    /* Contenido */
+    .content-body {
+        padding: 35px 25px;
+        text-align: center;
+    }
+    h1 {
+        font-size: 26px;
+        font-weight: 800;
+        margin: 0 0 10px 0;
+        color: #005eb8;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+    }
+    p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin: 0 0 25px 0;
+        color: #555555;
+    }
+
+    /* Caja de Estado */
+    .status-box {
+        background-color: #e8f5e9; /* Verde muy suave */
+        border: 2px solid #2e7d32; /* Verde Forum/Naturaleza */
+        border-radius: 6px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+    .status-headline {
+        font-size: 20px;
+        font-weight: 700;
+        color: #1b5e20;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    /* Tabla Detalles */
+    .details-table {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 30px;
+        border-top: 1px solid #eeeeee;
+    }
+    .details-table td {
+        padding: 15px 10px;
+        border-bottom: 1px solid #eeeeee;
+        vertical-align: top;
+    }
+    .details-label {
+        font-weight: 700;
+        color: #005eb8;
+        width: 30%;
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+    }
+    .details-value {
+        font-size: 16px;
+        color: #333333;
+        font-weight: 500;
+    }
+
+    /* QR Code styles inside overlay */
+    .qr-code {
+        width: 160px;
+        height: 160px;
+        margin: 10px auto;
+        display: block;
+        border: 4px solid white;
+    }
+
+    /* Reminder */
+    .reminder-box {
+        font-size: 14px;
+        color: #4b5563;
+        background-color: #f3f4f6;
+        padding: 15px;
+        border-radius: 6px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Footer */
+    .footer {
+        background-color: #f9fafb;
+        padding: 30px 20px;
+        text-align: center;
+        font-size: 12px;
+        color: #9ca3af;
+        border-top: 1px solid #e5e7eb;
+    }
+    .footer-link {
+        color: #005eb8;
+        text-decoration: none;
+        font-weight: 600;
+        margin: 0 5px;
+    }
+</style>
+</head>
+<body>
+
+<div class="email-wrapper">
+    <div class="email-container">
+        
+        <!-- Header con Logo -->
+        <div class="header-container">
+            <img src="https://appfsclub.forumsport.com/file-uploader-folder/nvvwu4l8viysp6t57a7aj4d2c4e6c8c95a8a5c36e08d4aed2f21e684czdsqjvgnxaeux09rf.jpg" alt="Forum Sport" style="width: 220px; max-width: 80%; margin: 0 auto;">
+        </div>
+
+        <!-- Hero Section con QR Superpuesto -->
+        <div class="hero-wrapper">
+            <!-- Imagen de fondo -->
+            <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80" alt="Nieve y Aventura" class="hero-image">
+            
+            <!-- QR Flotante (Overlay) -->
+            <div class="qr-overlay">
+                <p style="font-weight: 800; color: #005eb8; margin: 0; text-transform: uppercase; font-size: 14px; letter-spacing: 0.5px;">Tu pase de recogida</p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://www.forumsport.com" class="qr-code" alt="QR Code Forum Sport">
+                <p style="font-size: 11px; color: #666; margin: 5px 0 0 0; font-weight: 600;">Enseña este código</p>
+            </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="content-body">
+            
+            <h1>¡Tu equipo está listo!</h1>
+            <p>Hola Álex, ya tenemos todo preparado para tu viaje a Sierra Nevada.</p>
+
+            <!-- Status -->
+            <div class="status-box">
+                <div class="status-headline">
+                    <span style="font-size: 24px;">✅</span> LISTO PARA RECOGER
+                </div>
+                <p style="margin: 5px 0 0 0; color: #1b5e20;">El pedido ha sido verificado.</p>
+            </div>
+
+            <!-- Detalles -->
+            <table class="details-table" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="details-label">Tienda</td>
+                    <td class="details-value">
+                        <strong>FS Urban Centro</strong><br>
+                        Calle Mayor, 45
+                    </td>
+                </tr>
+                <tr>
+                    <td class="details-label">Zona</td>
+                    <td class="details-value" style="color: #005eb8; font-weight: 700;">
+                        Mostrador 2 (Alquiler)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="details-label">Reserva</td>
+                    <td class="details-value" style="font-family: monospace;">#NEWE-FS-9982</td>
+                </tr>
+            </table>
+
+            <!-- Reminder -->
+            <div class="reminder-box">
+                <span style="font-size: 20px;">ℹ️</span>
+                <span>No olvides traer tu DNI para validar la fianza del alquiler.</span>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p style="margin-bottom: 15px;">FORUM SPORT S.A. | <a href="#" class="footer-link">Ayuda</a> | <a href="#" class="footer-link">Mi Club</a></p>
+            <p>Este es un email automático relacionado con tu pedido.</p>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
